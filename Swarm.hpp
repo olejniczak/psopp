@@ -17,47 +17,59 @@
 #define PSOPP_SWARM_HPP
 
 #include <array>
+#include <memory>
 
 namespace psopp
 {
     template <
         class Domain,
-        int Size,
+        class Policy,
         template <class> class Comparator,
-        template <class,  class> class Evaluator
+        template <class, class> class Evaluator
     >
-    class Swarm
+    class Swarm : public Policy
     {
-        class Particle
-        {
-        public:
-            typename Domain::position_type position;
-            typename Domain::velocity_type velocity;
-            typename Domain::position_type best_position;
-        };
-        typedef std::array<Particle, Size> array_type;
+        ////typedef typename Policy::particle_pointer_type particle_pointer_type;
+        typedef typename Policy::container_type container_type;
     public:
-        typedef Particle particle_type;
+        typedef typename Policy::particle_type particle_type;
     public:
-        size_t size() const { return Size; }
-        const Particle& front() const { return swarm.front(); }
-        const Particle& back() const { return swarm.back(); }
-        const Particle& best() const { sort(); return front(); }
-        const Particle& worst() const { sort(); return back(); }
+        //explicit Swarm(size_t)
+        size_t size() const { return swarm.size(); }
+        const particle_type& front() const { return *swarm.front(); }
+        const particle_type& back() const { return *swarm.back(); }
+        const particle_type& best() const { sort(); return front(); }
+        const particle_type& worst() const { sort(); return back(); }
+        const particle_type& best() { return front(); }
+        const particle_type& worst() { return back(); }
 
-        typename array_type::iterator begin() { return swarm.begin(); }
-        typename array_type::iterator end() { return swarm.end(); }
+        typename container_type::iterator begin() { return swarm.begin(); }
+        typename container_type::iterator end() { return swarm.end(); }
+
+        const particle_type& operator[] (size_t index_) const
+        {
+            return *swarm[index_];
+        }
+
+        particle_type& operator[] (size_t index_)
+        {
+            return *swarm[index_];
+        }
+
         void sort()
         {
-            std::sort(swarm.begin(), swarm.end(), C<D>());
+            std::sort(swarm.begin(), swarm.end(), Comparator<Domain>());
         }
+
         void evaluate()
         {
             for (auto p : swarm) evaluator(p);
         }
     private:
-        array_type swarm;
-        Evaluator<Domain, Particle> evaluator;
+        container_type swarm;
+        Evaluator<Domain, particle_type> evaluator;
+
+
     };
 }
 

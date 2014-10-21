@@ -2,43 +2,21 @@
 
 namespace psopp
 {
-
-
-    
-
-    template <class D/*, class R*/>
-    class parameters
+    template <class Reader>
+    class BaseParameters : public Reader
     {
-        typedef typename D::domain_type T;
     public:
+        BaseParameters(const std::string& parameters_) : Reader(parameters_) {}
         void Read()
         {
-            inertia_weight = reader.get<T>("inertia_weight");
-            particle_learn = reader.get<T>("particle_learn");
-            swam_learn = reader.get<T>("swam_learn");
+            inertia_weight = get<double>("inertia_weight");
+            particle_learn = get<double>("particle_learn");
+            swarm_learn = get<double>("swarm_learn");
         }
     public:
-        T inertia_weight;
-        T particle_learn;
-        T swam_learn;
-    private:
-        //R reader;
-    };
-
-    template <
-        class D,
-        class P
-    >
-    class Evaluator
-    {
-        typedef typename D::domain_type T;
-        typedef typename P particle_type;
-    public:
-        T operator ()(const particle_type& particle_) const
-        {
-
-            return 0;
-        }
+        double inertia_weight;
+        double particle_learn;
+        double swarm_learn;
     };
 
     template <class D>

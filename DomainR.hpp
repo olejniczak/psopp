@@ -25,25 +25,12 @@ namespace psopp
     class R
     {
     public:
-        class Position
-        {
-        public:
-            Position& operator+=(const typename R::Velocity& velocity_)
-            {
-                for (size_t i = 0; i < N; ++i)
-                    coordinates[i] += velocity_.coordinates[i];
-                return *this;
-            }
-        private:
-            std::array<T, N> coordinates{};
-        };
-
         class Velocity
         {
             friend class R::Position;
         public:
             Velocity() {}
-            Velocity(const Position& posa_, const Position& posb_)
+            Velocity(const typename R::Position& posa_, const typename R::Position& posb_)
             {
                 for (size_t i = 0; i < N; ++i)
                     components[i] = posa_.coordinates[i] - posb_.coordinates[i];
@@ -65,17 +52,32 @@ namespace psopp
         private:
             std::array<T, N> components{};
         };
+
+        class Position
+        {
+            friend class Velocity;
+        public:
+            Position& operator+=(const typename Velocity& velocity_)
+            {
+                for (size_t i = 0; i < N; ++i)
+                    coordinates[i] += velocity_.components[i];
+                return *this;
+            }
+
+            Velocity operator- (const Position& other_) const
+            {
+                return Velocity(*this, other_);
+            }
+        private:
+            std::array<T, N> coordinates{};
+        };
     public:
         typedef Position position_type;
         typedef Velocity velocity_type;
         typedef T domain_type;
-    };
 
-    template <class Domain>
-    typename Domain::velocity_type operator- (const typename Domain::position_type& posa_, const typename Domain::position_type& posb_)
-    {
-        return Domain::velocity_type(posa_, posb_);
-    }
+        static const int Size = N;
+    };
 
     typedef R<> R3;
 }

@@ -16,33 +16,34 @@
 #ifndef PSOPP_ALGORITHM_HPP
 #define PSOPP_ALGORITHM_HPP
 
-#include "Swarm.hpp"
+#include <string>
 
 namespace psopp
 {
     template <
         class Domain,
-        template <class> class P,
-        template <class, class> class Variant,
-        int Size,
-        template <class> class ComparatorType,
-        template <class, class> class EvaluatorType
+        class Topology,
+        template <class> class Parameters,
+        class Reader,
+        template <class, class, class, template <class> class, template <class, class> class> class Type,
+        template <class> class Comparator,
+        template <class, class> class Evaluator
     >
-    class algorithm : public Variant<Domain, typename Swarm<Domain, Size, ComparatorType, EvaluatorType>::particle_type>
+    class Algorithm
+        : public Type<Domain, Topology, Parameters<Reader>, Comparator, Evaluator>
     {
-        typedef Swarm<Domain, Size, ComparatorType, EvaluatorType> swarm_type;
     public:
-        algorithm()
+        Algorithm(const std::string& parameters_)
+            : Type<Domain, Topology, Parameters<Reader>, Comparator, Evaluator>(parameters_)
         {
             //for (auto particle : swarm) I::Initialize(particle);
+            Read();
         }
         void Step()
         {
-            for (auto p : swarm) UpdateVelocity(p);
+            for (size_t i = 0; i < swarm.size(); ++i) 
+                UpdateVelocity(swarm[i]);
         }
-    private:
-        swarm_type swarm;
-        //typename  variant;
     };
 }
 #endif // PSOPP_ALGORITHM_HPP

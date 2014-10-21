@@ -6,14 +6,19 @@
 #include "Algorithm.hpp"
 #include "CanonicalPSO.hpp"
 #include "DomainR.hpp"
+#include "XmlReader.hpp"
+#include "ParserEvaluator.hpp"
+#include "Topology.hpp"
 
 #include "pso.h"
+
+
 using namespace psopp;
-typedef algorithm<R3, parameters, canonical_pso, 10, Minimize, Evaluator> real_pso;
+typedef Algorithm<R3, FullyInformed, BaseParameters, XmlReader, CanonicalPSO, Minimize, ParserEvaluator> real_pso;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-    real_pso rpso;
+    real_pso rpso("parameters.xml");
     rpso.Step();
 	return 0;
 }

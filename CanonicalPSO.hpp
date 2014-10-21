@@ -15,24 +15,44 @@
 */
 #ifndef PSOPP_CANONICALPSO_HPP
 #define PSOPP_CANONICALPSO_HPP
+#include <string>
+#include "AlgorithmType.hpp"
+#include "SwarmPolicy.hpp"
 
 namespace psopp
 {
     template<
         class Domain,
-        class ParticleType
+        class Topology,
+        class Parameters,
+        template <class> class Comparator,
+        template <class, class> class Evaluator
     >
-    class canonical_pso
+    class CanonicalPSO
+        : public AlgorithmType<Domain, Topology, Comparator, Evaluator>,
+          public Parameters
     {
     public:
-        void UpdateVelocity(ParticleType& particle_)
+        CanonicalPSO(const std::string& parameters_)
+            : Parameters(parameters_)
+        {}
+        void UpdateVelocity(particle_type& particle_)
         {
+            auto local_diff = particle_.best_position - particle_.position;
+            auto global_diff = swarm.best().position - particle_.position;
 
-            //particle_.velocity *= inertia_weight;
+            local_diff *= particle_learn;
+            local_diff *= 0.33;
 
+            global_diff *= swarm_learn;
+            global_diff *= 0.66;
+
+            particle_.velocity *= inertia_weight;
+            particle_.velocity += local_diff;
+            particle_.velocity += global_diff;
+
+            particle_.position += particle_.velocity;
         }
-    //public:
-    //    typedef typename D domain;
     };
 }
 
