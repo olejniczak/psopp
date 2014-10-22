@@ -24,8 +24,8 @@ namespace psopp
     class FullyInformed
     {
     public:
-        //template <class T> using particle_pointer = std::unique_ptr<T>;
-        //template <class T> using container_type = std::vector<T>;
+        template <class T> using particle_pointer = std::unique_ptr<T>;
+        template <class T> using container_type = std::vector<T>;
     };
 
     class Ring

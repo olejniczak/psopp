@@ -29,10 +29,10 @@ namespace psopp
     {
     public:
         typedef Particle particle_type;
-        //typedef typename Topology::particle_pointer<typename Particle> particle_pointer_type;
-        //typedef typename Topology::container_type<typename SwarmPolicy::particle_pointer_type> container_type;
-        typedef typename std::unique_ptr<typename Particle> particle_pointer_type;
-        typedef typename std::vector<typename SwarmPolicy::particle_pointer_type> container_type;
+        typedef typename Topology::template particle_pointer<typename Particle> particle_pointer_type;
+        typedef typename Topology::template container_type<typename SwarmPolicy::particle_pointer_type> container_type;
+        //typedef typename std::unique_ptr<typename Particle> particle_pointer_type;
+        //typedef typename std::vector<typename SwarmPolicy::particle_pointer_type> container_type;
     };
 }
 
