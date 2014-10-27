@@ -17,26 +17,22 @@
 #define PSOPP_CANONICALPSO_HPP
 
 #include <string>
-#include "AlgorithmType.hpp"
 
 namespace psopp
 {
     template<
-        class Domain,
-        class Topology,
-        class Parameters,
-        template <class> class Comparator,
-        template <class, class> class Evaluator
+        class A,
+        class Parameters
     >
     class CanonicalPSO
-        : public AlgorithmType<Domain, Topology, Comparator, Evaluator>,
+        : public A,
           public Parameters
     {
     public:
         CanonicalPSO(const std::string& parameters_)
-            : /*AlgorithmType<Domain, Topology, Comparator, Evaluator>(parameters_), */Parameters(parameters_)
+            : Parameters(parameters_)
         {}
-        void UpdateVelocity(particle_type& particle_)
+        void UpdateVelocity(typename A::particle_type& particle_)
         {
             auto local_diff = particle_.best_position - particle_.position;
             auto global_diff = swarm.best().position - particle_.position;
