@@ -17,7 +17,7 @@
 #define PSOPP_VARIANT_HPP
 
 #include "Swarm.hpp"
-#include "SwarmPolicy.hpp"
+#include "SwarmStructure.hpp"
 
 namespace psopp
 {
@@ -36,9 +36,12 @@ namespace psopp
             typename Domain::velocity_type velocity;
             typename Domain::position_type best_position;
         };
+    public:
+        AlgorithmType()
+            : swarm(10) {}
     protected:
         typedef Particle particle_type;
-        Swarm<Domain, SwarmPolicy<Topology, Particle> , Comparator, Evaluator> swarm;
+        Swarm<Domain, SwarmStructure<Topology, Particle>, Comparator, Evaluator> swarm;
     };
 } 
 

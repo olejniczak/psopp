@@ -15,9 +15,9 @@
 */
 #ifndef PSOPP_CANONICALPSO_HPP
 #define PSOPP_CANONICALPSO_HPP
+
 #include <string>
 #include "AlgorithmType.hpp"
-#include "SwarmPolicy.hpp"
 
 namespace psopp
 {
@@ -34,7 +34,7 @@ namespace psopp
     {
     public:
         CanonicalPSO(const std::string& parameters_)
-            : Parameters(parameters_)
+            : /*AlgorithmType<Domain, Topology, Comparator, Evaluator>(parameters_), */Parameters(parameters_)
         {}
         void UpdateVelocity(particle_type& particle_)
         {

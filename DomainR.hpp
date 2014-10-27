@@ -16,6 +16,8 @@
 #ifndef PSOPP_DOMAINR_HPP
 #define PSOPP_DOMAINR_HPP
 
+#include <array>
+
 namespace psopp
 {
     template <

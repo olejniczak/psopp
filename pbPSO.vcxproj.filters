@@ -57,7 +57,7 @@
     <ClInclude Include="Topology.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SwarmPolicy.hpp">
+    <ClInclude Include="SwarmStructure.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -72,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ParserEvaluator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Topology.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -14,7 +14,7 @@
 
 
 using namespace psopp;
-typedef Algorithm<R3, FullyInformed, BaseParameters, XmlReader, CanonicalPSO, Minimize, ParserEvaluator> real_pso;
+typedef Algorithm<R3, Star, BaseParameters, XmlReader, CanonicalPSO, Minimize, ParserEvaluator> real_pso;
 
 int _tmain(int argc, _TCHAR* argv[])
 {

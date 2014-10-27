@@ -91,7 +91,7 @@
     <ClInclude Include="CanonicalPSO.hpp" />
     <ClInclude Include="Constrains.hpp" />
     <ClInclude Include="DomainR.hpp" />
-    <ClInclude Include="SwarmPolicy.hpp" />
+    <ClInclude Include="SwarmStructure.hpp" />
     <ClInclude Include="Topology.hpp" />
     <ClInclude Include="ParserEvaluator.hpp" />
     <ClInclude Include="pso.h" />
@@ -106,6 +106,7 @@
     <ClCompile Include="ParserEvaluator.cpp" />
     <ClCompile Include="pbPSO.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Topology.cpp" />
     <ClCompile Include="XmlReader.cpp" />
   </ItemGroup>
   <ItemGroup>

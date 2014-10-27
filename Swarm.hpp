@@ -16,29 +16,41 @@
 #ifndef PSOPP_SWARM_HPP
 #define PSOPP_SWARM_HPP
 
-#include <array>
+#include <vector>
 #include <memory>
 
 namespace psopp
 {
     template <
         class Domain,
-        class Policy,
+        class Structure,
         template <class> class Comparator,
         template <class, class> class Evaluator
     >
-    class Swarm : public Policy
+    class Swarm : public Structure
     {
-        ////typedef typename Policy::particle_pointer_type particle_pointer_type;
-        typedef typename Policy::container_type container_type;
+        //typedef typename Structure::container_type container_type;
     public:
-        typedef typename Policy::particle_type particle_type;
+        typedef typename Structure::particle_type particle_type;
+        typedef typename std::vector<std::unique_ptr<particle_type>> container_type;
     public:
-        //explicit Swarm(size_t)
+        explicit Swarm(size_t size_)
+            : Structure(size_)
+        {
+            for (size_t i = 0; i < size_; ++i)
+                swarm.push_back(std::unique_ptr<particle_type>(new particle_type()));            
+            
+            for (size_t i = 0; i < size(); ++i)
+            {
+                nhoods.push_back(std::unique_ptr<Neighborhood>(new Neighborhood()));
+                for (size_t j = 0; j < neighborhoods[i].Count(); ++j)
+                    nhoods.back()->Add(*swarm[j]);
+            }
+        }
         size_t size() const { return swarm.size(); }
         const particle_type& front() const { return *swarm.front(); }
         const particle_type& back() const { return *swarm.back(); }
-        const particle_type& best() const { sort(); return front(); }
+        const particle_type& best(size_t i) const { sort(); return front(); }
         const particle_type& worst() const { sort(); return back(); }
         const particle_type& best() { return front(); }
         const particle_type& worst() { return back(); }
@@ -68,8 +80,6 @@ namespace psopp
     private:
         container_type swarm;
         Evaluator<Domain, particle_type> evaluator;
-
-
     };
 }
 
