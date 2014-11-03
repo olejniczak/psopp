@@ -91,15 +91,19 @@
     <ClInclude Include="CanonicalPSO.hpp" />
     <ClInclude Include="Constrains.hpp" />
     <ClInclude Include="DomainR.hpp" />
+    <ClInclude Include="Init.hpp" />
+    <ClInclude Include="IOReader.hpp" />
+    <ClInclude Include="Problem.hpp" />
+    <ClInclude Include="Random.hpp" />
+    <ClInclude Include="Rosenbrock.hpp" />
     <ClInclude Include="SwarmStructure.hpp" />
     <ClInclude Include="Topology.hpp" />
     <ClInclude Include="ParserEvaluator.hpp" />
     <ClInclude Include="pso.h" />
-    <ClInclude Include="Random.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Swarm.hpp" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="AlgorithmType.hpp" />
+    <ClInclude Include="AlgorithmBase.hpp" />
     <ClInclude Include="XmlReader.hpp" />
   </ItemGroup>
   <ItemGroup>

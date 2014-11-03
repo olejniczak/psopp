@@ -24,24 +24,30 @@ namespace psopp
     template<
         class Domain,
         class Topology,
-        template <class> class Comparator,
-        template <class, class> class Evaluator
+        template <class> class Initializer,
+        template <class> class Evaluator,
+        class Parameters,
+        class RandomNumberGenerator
     >
-    class AlgorithmType
+    class AlgorithmBase
+        : public Parameters
     {
         class Particle
         {
         public:
             typename Domain::position_type position;
             typename Domain::velocity_type velocity;
+            //typename Domain::value_type    fitness;
             typename Domain::position_type best_position;
+            //typename Domain::position_type best_fitness;
         };
     public:
-        AlgorithmType()
-            : swarm(10) {}
+        AlgorithmBase()
+            : swarm(20) {}
     protected:
         typedef Particle particle_type;
-        Swarm<Domain, SwarmStructure<Topology, Particle>, Comparator, Evaluator> swarm;
+        Swarm<Domain, SwarmStructure<Topology, Particle>, Initializer, Evaluator> swarm;
+        RandomNumberGenerator random;
     };
 } 
 

@@ -24,23 +24,31 @@ namespace psopp
     template <
         class Domain,
         class Structure,
-        template <class> class Comparator,
-        template <class, class> class Evaluator
+        template <class> class Initializer,
+        template <class> class Evaluator
     >
-    class Swarm : public Structure
+    class Swarm 
+        : public Structure
     {
-        //typedef typename Structure::container_type container_type;
-    public:
+    //public:
         typedef typename Structure::particle_type particle_type;
-        typedef typename std::vector<std::unique_ptr<particle_type>> container_type;
+        typedef typename std::unique_ptr<particle_type> particle_ptr_type;
+        typedef typename std::vector<particle_ptr_type> container_type;
+
+        static bool Minimize(const particle_ptr_type& a, const particle_ptr_type& b)
+        {
+            return a->position.fitness < b->position.fitness;
+        }
     public:
         explicit Swarm(size_t size_)
-            : Structure(size_)
+            : Structure(size_), scored(false)
         {
             for (size_t i = 0; i < size_; ++i)
                 swarm.push_back(std::unique_ptr<particle_type>(new particle_type()));            
             
-            for (size_t i = 0; i < size(); ++i)
+            initialize();
+
+            for (size_t i = 0; i < neighborhoods.Count(); ++i)
             {
                 nhoods.push_back(std::unique_ptr<Neighborhood>(new Neighborhood()));
                 for (size_t j = 0; j < neighborhoods[i].Count(); ++j)
@@ -50,13 +58,12 @@ namespace psopp
         size_t size() const { return swarm.size(); }
         const particle_type& front() const { return *swarm.front(); }
         const particle_type& back() const { return *swarm.back(); }
-        const particle_type& best(size_t i) const { sort(); return front(); }
-        const particle_type& worst() const { sort(); return back(); }
-        const particle_type& best() { return front(); }
-        const particle_type& worst() { return back(); }
-
-        typename container_type::iterator begin() { return swarm.begin(); }
-        typename container_type::iterator end() { return swarm.end(); }
+        const particle_type& best() { minmax(); return front(); }
+        const particle_type& worst() { minmax(); return back(); }
+        const particle_type& best() const { return front(); }
+        const particle_type& worst() const {  return back(); }
+        typename container_type::iterator begin() { return swarm.begin(); } // ?
+        typename container_type::iterator end() { return swarm.end(); } // ? 
 
         const particle_type& operator[] (size_t index_) const
         {
@@ -68,18 +75,57 @@ namespace psopp
             return *swarm[index_];
         }
 
-        void sort()
-        {
-            std::sort(swarm.begin(), swarm.end(), Comparator<Domain>());
-        }
-
         void evaluate()
         {
-            for (auto p : swarm) evaluator(p);
+            for (auto& p : swarm)
+            {
+                evaluator(p->position);
+                //p->best_position = std::min(p->position, p->best_position, Minimize);
+                if (p->position.fitness < p->best_position.fitness)
+                {
+                    p->best_position = p->position;
+                }
+            }
+            scored = false;
+            minmax();
+        }
+
+        void check_velo()
+        {
+            for (auto& p : swarm)
+            {
+                for (int i = 0; i < Domain::Size; ++i)
+                    if (p->velocity.components[i] > 10) p->velocity.components[i] = 10;
+            }
+        }
+
+    private:
+        void initialize()
+        {
+            for (auto& p : swarm)
+            {
+                initializer.InitPosition(p->position);
+                p->best_position = p->position;
+                evaluator(p->best_position);
+                initializer.InitVelocity(p->velocity, p->position);
+            }
+            evaluate();
+        }
+
+        void minmax()
+        {
+            if (scored) return;
+            scored = true;
+            auto minmax = std::minmax_element(swarm.begin(), swarm.end(), Minimize);
+            std::iter_swap(swarm.begin(), minmax.first);
+            std::iter_swap(--swarm.end(), minmax.second);
         }
     private:
+        Initializer<Evaluator<Domain>> initializer;
+        Evaluator<Domain> evaluator;
+
+        bool scored;
         container_type swarm;
-        Evaluator<Domain, particle_type> evaluator;
     };
 }
 

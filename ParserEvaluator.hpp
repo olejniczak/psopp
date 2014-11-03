@@ -37,13 +37,12 @@ namespace psopp
     };
 
     template <
-        class Domain,
-        class ParticleType
+        class Domain
     >
     class ParserEvaluator : public Parser
     {
-        typedef typename Domain::domain_type T;
-        typedef typename ParticleType particle_type;
+        typedef typename Domain::value_type T;
+        typedef typename Domain::position_type position_type;
     public:
         ParserEvaluator() : Parser(Domain::Size) {}
 
@@ -52,10 +51,10 @@ namespace psopp
             Parser::SetExpression(expression_);
         }
 
-        T operator ()(const particle_type& particle_) const
+        T operator ()(const position_type& position_) const
         {
             for (size_t i = 0; i < Domain::Size; ++i)
-                variables[i] = particle_.position.coordinates[i];
+                variables[i] = position_.coordinates[i];
             return Evaluate();
         }
     };

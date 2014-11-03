@@ -22,7 +22,7 @@ namespace psopp
 {
     template <
         typename T = double, 
-        int N = 3
+        int N = 2
     >
     class R
     {
@@ -51,7 +51,7 @@ namespace psopp
                     components[i] += velocity_.components[i];
                 return *this;
             }
-        private:
+        ///private:
             std::array<T, N> components{};
         };
 
@@ -70,18 +70,19 @@ namespace psopp
             {
                 return Velocity(*this, other_);
             }
-        private:
+        ///private:
             std::array<T, N> coordinates{};
+            T fitness;
         };
     public:
         typedef Position position_type;
         typedef Velocity velocity_type;
-        typedef T domain_type;
+        typedef T value_type;
 
         static const int Size = N;
     };
 
-    typedef R<> R3;
+    typedef R<> R2;
 }
 
 #endif // PSOPP_DOMAINR_HPP

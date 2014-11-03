@@ -20,28 +20,25 @@
 
 namespace psopp
 {
-    template<
-        class A,
-        class Parameters
-    >
-    class CanonicalPSO
-        : public A,
-          public Parameters
+    template<class Base>
+    class CanonicalPSO : public Base
     {
     public:
-        CanonicalPSO(const std::string& parameters_)
-            : Parameters(parameters_)
-        {}
-        void UpdateVelocity(typename A::particle_type& particle_)
+        //CanonicalPSO() : Base()
+        //{}        
+        //CanonicalPSO(const std::string& parameters_)
+        //: Parameters(parameters_)
+        //{}
+        void UpdateVelocity(typename Base::particle_type& particle_)
         {
             auto local_diff = particle_.best_position - particle_.position;
             auto global_diff = swarm.best().position - particle_.position;
 
             local_diff *= particle_learn;
-            local_diff *= 0.33;
+            local_diff *= random.GetReal(0, 1);
 
             global_diff *= swarm_learn;
-            global_diff *= 0.66;
+            global_diff *= random.GetReal(0, 1);
 
             particle_.velocity *= inertia_weight;
             particle_.velocity += local_diff;
