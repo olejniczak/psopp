@@ -49,17 +49,22 @@ namespace psopp
             // TODO: read policy
         }
 
-        //void Evaluate()
-        //{
-        //    for (size_t i = 0; i < swarm.size(); ++i)
-        //        Evaluate(swarm[i]);
-        //}
+        int Start(int terminate_)
+        {
+            int step = 0;
+            while (step++ < terminate_)
+            {
+                Step();
+                if (std::fabs(swarm.worst().position.fitness - swarm.best().position.fitness) < 0.001) return step;
+            }
+            return step;
+        }
 
         void Step()
         {
             for (size_t i = 0; i < swarm.size(); ++i)
                 UpdateVelocity(swarm[i]);
-            swarm.check_velo();
+            //swarm.check_velo();
             for (size_t i = 0; i < swarm.size(); ++i)
                 UpdatePosition(swarm[i]);
             swarm.evaluate();

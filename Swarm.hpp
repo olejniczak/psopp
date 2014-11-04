@@ -22,15 +22,14 @@
 namespace psopp
 {
     template <
-        class Domain,
         class Structure,
-        template <class> class Initializer,
-        template <class> class Evaluator
+        class Initializer,
+        class Evaluator
     >
     class Swarm 
         : public Structure
     {
-    //public:
+    public:
         typedef typename Structure::particle_type particle_type;
         typedef typename std::unique_ptr<particle_type> particle_ptr_type;
         typedef typename std::vector<particle_ptr_type> container_type;
@@ -51,8 +50,12 @@ namespace psopp
             for (size_t i = 0; i < neighborhoods.Count(); ++i)
             {
                 nhoods.push_back(std::unique_ptr<Neighborhood>(new Neighborhood()));
-                for (size_t j = 0; j < neighborhoods[i].Count(); ++j)
-                    nhoods.back()->Add(*swarm[j]);
+                auto nh = neighborhoods[i];
+                for (size_t j = 0; j < nh.Count(); ++j)
+                {
+                    auto id = nh[j];
+                    nhoods.back()->Add(*swarm[id]);
+                }
             }
         }
         size_t size() const { return swarm.size(); }
@@ -90,15 +93,6 @@ namespace psopp
             minmax();
         }
 
-        void check_velo()
-        {
-            for (auto& p : swarm)
-            {
-                for (int i = 0; i < Domain::Size; ++i)
-                    if (p->velocity.components[i] > 10) p->velocity.components[i] = 10;
-            }
-        }
-
     private:
         void initialize()
         {
@@ -121,8 +115,8 @@ namespace psopp
             std::iter_swap(--swarm.end(), minmax.second);
         }
     private:
-        Initializer<Evaluator<Domain>> initializer;
-        Evaluator<Domain> evaluator;
+        Initializer initializer;
+        Evaluator evaluator;
 
         bool scored;
         container_type swarm;

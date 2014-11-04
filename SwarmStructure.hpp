@@ -23,28 +23,47 @@
 namespace psopp
 {
     template <
-        class Topo,
-        class Particle
+        class Domain,
+        class Topo
     >
     class SwarmStructure : public Topo
     {
+    protected:
+        class Neighborhood;
+        class Particle
+        {
+            friend class Neighborhood;
+        public:
+            typename Domain::position_type position;
+            typename Domain::velocity_type velocity;
+            typename Domain::position_type best_position;
+            typename const Domain::position_type& gbest_position() const;
+        private:
+            Neighborhood* neighborhood;
+        };
     public:
         typedef Particle particle_type;
 
         class Neighborhood
         {
+            static bool Minimize(const particle_type* const a, const particle_type* const b)
+            {
+                return a->position.fitness < b->position.fitness;
+            }
         public:
-            void Add(const particle_type& particle_)
+            void Add(particle_type& particle_)
             {
                 elements.push_back(&particle_);
+                particle_.neighborhood = this;
             }
 
             const particle_type& best() const
             {
-                return std::min_element(elements.begin(), elements.end(), Comparator<Domain>());
+                auto blah = *std::min_element(elements.begin(), elements.end(), Minimize);
+                return *blah;
             }
         private:
-            std::vector<const particle_type*> elements;
+            std::vector<const particle_type* const> elements;
         };
     public:
         SwarmStructure(size_t size_)
@@ -54,6 +73,11 @@ namespace psopp
     protected:
         std::vector<std::unique_ptr<Neighborhood>> nhoods;
     };
+
+    template<class Domain, class Topo> typename const Domain::position_type& SwarmStructure<Domain, Topo>::Particle::gbest_position() const
+    {
+        return neighborhood->best().position;
+    }
 }
 
 #endif // PSOPP_SWARMSTRUCTURE_HPP

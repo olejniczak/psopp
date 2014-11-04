@@ -13,8 +13,8 @@
 * http://www.boost.org/LICENSE_1_0.txt)
 *
 */
-#ifndef PSOPP_ROSENBROCK_HPP
-#define PSOPP_ROSENBROCK_HPP
+#ifndef PSOPP_HIMMELBLAU_HPP
+#define PSOPP_HIMMELBLAU_HPP
 
 #include "Problem.hpp"
 
@@ -23,7 +23,7 @@ namespace psopp
     template<
         class Domain
     >
-    class Rosenbrock : public Problem<Domain>
+    class Himmalblau : public Problem<Domain>
     {
     public:
         void operator()(position_type& position_)
@@ -33,7 +33,7 @@ namespace psopp
             {
                 auto xi = position_.coordinates[i];
                 auto xii = position_.coordinates[i + 1];
-                position_.fitness += (1 - xi) * (1 - xi) + 100 * (xii - xi * xi) * (xii - xi * xi);
+                position_.fitness += (xi * xi + xii - 11) * (xi * xi + xii - 11) + (xi + xii * xii - 7) * (xi + xii * xii - 7);
             }
         }
 
@@ -49,4 +49,4 @@ namespace psopp
     };
 }
 
-#endif // PSOPP_ROSENBROCK_HPP
+#endif // PSOPP_HIMMELBLAU_HPP

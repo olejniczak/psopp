@@ -21,8 +21,8 @@
 namespace psopp
 {
     template <
-        typename T = double, 
-        int N = 2
+        int N = 2,
+        typename T = double 
     >
     class R
     {

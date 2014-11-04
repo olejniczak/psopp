@@ -91,6 +91,7 @@
     <ClInclude Include="CanonicalPSO.hpp" />
     <ClInclude Include="Constrains.hpp" />
     <ClInclude Include="DomainR.hpp" />
+    <ClInclude Include="Himmelblau.hpp" />
     <ClInclude Include="Init.hpp" />
     <ClInclude Include="IOReader.hpp" />
     <ClInclude Include="Problem.hpp" />

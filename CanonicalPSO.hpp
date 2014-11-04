@@ -16,23 +16,16 @@
 #ifndef PSOPP_CANONICALPSO_HPP
 #define PSOPP_CANONICALPSO_HPP
 
-#include <string>
-
 namespace psopp
 {
     template<class Base>
     class CanonicalPSO : public Base
     {
     public:
-        //CanonicalPSO() : Base()
-        //{}        
-        //CanonicalPSO(const std::string& parameters_)
-        //: Parameters(parameters_)
-        //{}
         void UpdateVelocity(typename Base::particle_type& particle_)
         {
             auto local_diff = particle_.best_position - particle_.position;
-            auto global_diff = swarm.best().position - particle_.position;
+            auto global_diff = particle_.gbest_position() - particle_.position;
 
             local_diff *= particle_learn;
             local_diff *= random.GetReal(0, 1);
@@ -43,8 +36,6 @@ namespace psopp
             particle_.velocity *= inertia_weight;
             particle_.velocity += local_diff;
             particle_.velocity += global_diff;
-
-            particle_.position += particle_.velocity;
         }
     };
 }

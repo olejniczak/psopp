@@ -32,21 +32,14 @@ namespace psopp
     class AlgorithmBase
         : public Parameters
     {
-        class Particle
-        {
-        public:
-            typename Domain::position_type position;
-            typename Domain::velocity_type velocity;
-            //typename Domain::value_type    fitness;
-            typename Domain::position_type best_position;
-            //typename Domain::position_type best_fitness;
-        };
+        typedef Swarm<SwarmStructure<Domain, Topology>, Initializer<Evaluator<Domain>>, Evaluator<Domain>> swarm_type;
+    protected:
+        typedef typename swarm_type::particle_type particle_type;
     public:
         AlgorithmBase()
             : swarm(20) {}
     protected:
-        typedef Particle particle_type;
-        Swarm<Domain, SwarmStructure<Topology, Particle>, Initializer, Evaluator> swarm;
+        swarm_type swarm;
         RandomNumberGenerator random;
     };
 } 

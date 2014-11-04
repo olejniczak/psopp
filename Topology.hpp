@@ -64,7 +64,7 @@ namespace psopp
             neighborhoods[0].Add(0);
             neighborhoods[0].Add(1);
             neighborhoods[0].Add(size_ - 1);
-            for (size_t i = 1; i < size_; ++i)
+            for (size_t i = 1; i < size_ - 1; ++i)
             {
                 neighborhoods[i].Add(i);
                 neighborhoods[i].Add(i + 1);
