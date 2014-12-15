@@ -26,7 +26,7 @@ namespace psopp
     class Rosenbrock : public Problem<Domain>
     {
     public:
-        void operator()(typename Domain::position_type& position_)
+        void operator()(typename Domain::position_type& position_) const
         {
             position_.fitness = {};
             for (size_t i = 0; i < Domain::Size - 1; ++i)
