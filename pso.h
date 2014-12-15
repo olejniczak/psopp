@@ -10,9 +10,9 @@ namespace psopp
         BaseParameters(const std::string& parameters_) : Reader(parameters_) {}
         void Read()
         {
-            inertia_weight = get<double>("inertia_weight");
-            particle_learn = get<double>("particle_learn");
-            swarm_learn = get<double>("swarm_learn");
+            inertia_weight = this->template get<double>("inertia_weight");
+            particle_learn = this->template get<double>("particle_learn");
+            swarm_learn = this->template get<double>("swarm_learn");
         }
     public:
         double inertia_weight;

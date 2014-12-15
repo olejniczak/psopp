@@ -41,7 +41,7 @@ namespace psopp
             : Type<AlgorithmBase<Domain, Topology, Initializer, Evaluator, Parameters<Reader>, RandomNumberGenerator>>()
         {
             //for (auto particle : swarm) I::Initialize(particle); parameters_
-            Read();
+            this->Read();
         }
 
         void ReadParams()
@@ -55,19 +55,19 @@ namespace psopp
             while (step++ < terminate_)
             {
                 Step();
-                if (std::fabs(swarm.worst().position.fitness - swarm.best().position.fitness) < 0.001) return step;
+                if (std::fabs(this->swarm.worst().position.fitness - this->swarm.best().position.fitness) < 0.001) return step;
             }
             return step;
         }
 
         void Step()
         {
-            for (size_t i = 0; i < swarm.size(); ++i)
-                UpdateVelocity(swarm[i]);
+            for (std::size_t i = 0; i < this->swarm.size(); ++i)
+                this->UpdateVelocity(this->swarm[i]);
             //swarm.check_velo();
-            for (size_t i = 0; i < swarm.size(); ++i)
-                UpdatePosition(swarm[i]);
-            swarm.evaluate();
+            for (std::size_t i = 0; i < this->swarm.size(); ++i)
+                UpdatePosition(this->swarm[i]);
+            this->swarm.evaluate();
         }
 
         void UpdatePosition(particle_type& particle_)

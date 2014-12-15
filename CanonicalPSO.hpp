@@ -27,13 +27,13 @@ namespace psopp
             auto local_diff = particle_.best_position - particle_.position;
             auto global_diff = particle_.gbest_position() - particle_.position;
 
-            local_diff *= particle_learn;
-            local_diff *= random.GetReal(0, 1);
+            local_diff *= this->particle_learn;
+            local_diff *= this->random.GetReal(0, 1);
 
-            global_diff *= swarm_learn;
-            global_diff *= random.GetReal(0, 1);
+            global_diff *= this->swarm_learn;
+            global_diff *= this->random.GetReal(0, 1);
 
-            particle_.velocity *= inertia_weight;
+            particle_.velocity *= this->inertia_weight;
             particle_.velocity += local_diff;
             particle_.velocity += global_diff;
         }

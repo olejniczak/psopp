@@ -26,32 +26,32 @@ namespace psopp
         {
             struct Neighborhood
             {
-                const size_t Count() const;
-                void Add(size_t index_);
-                void Set(size_t index_);
-                size_t operator[] (size_t index_) const;
+                const std::size_t Count() const;
+                void Add(std::size_t index_);
+                void Set(std::size_t index_);
+                std::size_t operator[] (std::size_t index_) const;
             private:
-                std::vector<size_t> indexes;
+                std::vector<std::size_t> indexes;
             };
 
-            Neighborhoods(size_t count_);
-            const size_t Count() const;
-            const Neighborhood& operator[](size_t index_) const;
-            Neighborhood& operator[](size_t index_);
+            Neighborhoods(std::size_t count_);
+            const std::size_t Count() const;
+            const Neighborhood& operator[](std::size_t index_) const;
+            Neighborhood& operator[](std::size_t index_);
         private:
             std::vector<Neighborhood> neighborhoods;
         };
     protected:
-        explicit Topology(size_t count_);
+        explicit Topology(std::size_t count_);
         Neighborhoods neighborhoods;
     };
 
     class Full : public Topology
     {
     protected:
-        explicit Full(size_t size_) : Topology(1)
+        explicit Full(std::size_t size_) : Topology(1)
         {
-            for (size_t i = 0; i < size_; ++i)
+            for (std::size_t i = 0; i < size_; ++i)
                 neighborhoods[0].Add(i);
         }
     };
@@ -70,12 +70,12 @@ namespace psopp
     class Ring : public Topology
     {
     protected:
-        explicit Ring(size_t size_) : Topology(size_)
+        explicit Ring(std::size_t size_) : Topology(size_)
         {
             neighborhoods[0].Add(0);
             neighborhoods[0].Add(1);
             neighborhoods[0].Add(size_ - 1);
-            for (size_t i = 1; i < size_ - 1; ++i)
+            for (std::size_t i = 1; i < size_ - 1; ++i)
             {
                 neighborhoods[i].Add(i);
                 neighborhoods[i].Add(i + 1);
@@ -90,10 +90,10 @@ namespace psopp
     class Star : public Topology
     {
     protected:
-        explicit Star(size_t size_) : Topology(size_)
+        explicit Star(std::size_t size_) : Topology(size_)
         {
-            size_t central = size_ / 3;
-            for (size_t i = 0; i < size_; ++i)
+            std::size_t central = size_ / 3;
+            for (std::size_t i = 0; i < size_; ++i)
             {
                 neighborhoods[i].Add(i);
                 if (i != central)

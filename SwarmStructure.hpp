@@ -29,8 +29,9 @@ namespace psopp
     >
     class SwarmStructure : public Topo
     {
-    protected:
+    public:
         class Neighborhood;
+    protected:
         class Particle
         {
             friend class Neighborhood;
@@ -38,7 +39,7 @@ namespace psopp
             typename Domain::position_type position;
             typename Domain::velocity_type velocity;
             typename Domain::position_type best_position;
-            typename const Domain::position_type& gbest_position() const;
+            const typename Domain::position_type& gbest_position() const;
         private:
             Neighborhood* neighborhood {};
         };
@@ -80,7 +81,7 @@ namespace psopp
                 std::iter_swap(--swarm.end(), minmax.second);
             }
         private:
-            std::vector<const particle_type* const> elements;
+            std::vector<const particle_type*> elements;
         };
     public:
         SwarmStructure(size_t size_)
@@ -98,7 +99,7 @@ namespace psopp
         std::vector<std::unique_ptr<Neighborhood>> nhoods;
     };
 
-    template<class Domain, class Topo> typename const Domain::position_type& SwarmStructure<Domain, Topo>::Particle::gbest_position() const
+    template<class Domain, class Topo> const typename Domain::position_type& SwarmStructure<Domain, Topo>::Particle::gbest_position() const
     {
         return neighborhood->best.position;
     }

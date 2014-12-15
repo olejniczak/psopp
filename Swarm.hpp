@@ -18,6 +18,7 @@
 
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 namespace psopp
 {
@@ -26,11 +27,12 @@ namespace psopp
         class Initializer,
         class Evaluator
     >
-    class Swarm 
+    class Swarm
         : public Structure
     {
     public:
         typedef typename Structure::particle_type particle_type;
+        typedef typename Structure::Neighborhood neighborhood_type;
         typedef typename std::unique_ptr<particle_type> particle_ptr_type;
         typedef typename std::vector<particle_ptr_type> container_type;
 
@@ -43,18 +45,18 @@ namespace psopp
             : Structure(size_), scored(false)
         {
             for (size_t i = 0; i < size_; ++i)
-                swarm.push_back(std::unique_ptr<particle_type>(new particle_type()));            
-            
+                swarm.push_back(std::unique_ptr<particle_type>(new particle_type()));
+
             initialize();
 
-            for (size_t i = 0; i < neighborhoods.Count(); ++i)
+            for (size_t i = 0; i < this->neighborhoods.Count(); ++i)
             {
-                nhoods.push_back(std::unique_ptr<Neighborhood>(new Neighborhood()));
-                auto nh = neighborhoods[i];
+                this->nhoods.push_back(std::unique_ptr<neighborhood_type>(new neighborhood_type()));
+                auto nh = this->neighborhoods[i];
                 for (size_t j = 0; j < nh.Count(); ++j)
                 {
                     auto id = nh[j];
-                    nhoods.back()->Add(*swarm[id]);
+                    this->nhoods.back()->Add(*swarm[id]);
                 }
             }
         }
@@ -66,7 +68,7 @@ namespace psopp
         const particle_type& best() const { return front(); }
         const particle_type& worst() const {  return back(); }
         typename container_type::iterator begin() { return swarm.begin(); } // ?
-        typename container_type::iterator end() { return swarm.end(); } // ? 
+        typename container_type::iterator end() { return swarm.end(); } // ?
 
         const particle_type& operator[] (size_t index_) const
         {
