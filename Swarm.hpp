@@ -91,6 +91,7 @@ namespace psopp
             }
             scored = false;
             minmax();
+            update_neighborhoods();
         }
 
     private:

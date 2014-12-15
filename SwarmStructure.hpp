@@ -17,6 +17,7 @@
 #define PSOPP_SWARMSTRUCTURE_HPP
 
 #include <algorithm>
+#include <iostream>
 #include <memory>
 #include <vector>
 
@@ -39,7 +40,7 @@ namespace psopp
             typename Domain::position_type best_position;
             typename const Domain::position_type& gbest_position() const;
         private:
-            Neighborhood* neighborhood;
+            Neighborhood* neighborhood {};
         };
     public:
         typedef Particle particle_type;
@@ -51,16 +52,32 @@ namespace psopp
                 return a->position.fitness < b->position.fitness;
             }
         public:
-            void Add(particle_type& particle_)
+            Neighborhood()
             {
-                elements.push_back(&particle_);
-                particle_.neighborhood = this;
+                best.position.fitness = 1e100;
             }
 
-            const particle_type& best() const
+            void Add(particle_type& particle_)
             {
-                auto blah = *std::min_element(elements.begin(), elements.end(), Minimize);
-                return *blah;
+                if (!particle_.neighborhood) particle_.neighborhood = this;
+                elements.push_back(&particle_);                
+            }
+
+            void update_best()
+            {
+                const particle_type* const m = *std::min_element(elements.begin(), elements.end(), Minimize);
+                const particle_type* const b = &best;
+                best = *std::min(m, b, Minimize);
+
+                //std::cout << best.position.fitness << std::endl;
+            }
+            particle_type best;
+
+            void minmax()
+            {
+                auto minmax = std::minmax_element(elements.begin(), elements.end(), Minimize);
+                std::iter_swap(swarm.begin(), minmax.first);
+                std::iter_swap(--swarm.end(), minmax.second);
             }
         private:
             std::vector<const particle_type* const> elements;
@@ -71,12 +88,19 @@ namespace psopp
         {
         }
     protected:
+        void update_neighborhoods()
+        {
+            for (auto& n : nhoods)
+            {
+                n->update_best();
+            }
+        }
         std::vector<std::unique_ptr<Neighborhood>> nhoods;
     };
 
     template<class Domain, class Topo> typename const Domain::position_type& SwarmStructure<Domain, Topo>::Particle::gbest_position() const
     {
-        return neighborhood->best().position;
+        return neighborhood->best.position;
     }
 }
 

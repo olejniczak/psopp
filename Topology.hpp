@@ -1,10 +1,10 @@
 /**
- * The following code defines ,
- * which is
+ * The following code defines class Topology, and some derived classes
+ * which represents topologies of the neighborhood of the particles in swarm
  *
  * See <WEBSITE> for documentation.
  *
- * @author Copyright &copy 2011 Przemys³aw Olejniczak.
+ * @author Copyright &copy 2014 Przemys³aw Olejniczak.
  * @version <VERSION>
  * @date <DATE>
  *
@@ -56,6 +56,17 @@ namespace psopp
         }
     };
 
+    template <int N>
+    class Multi : public Topology
+    {
+    protected:
+        explicit Multi(size_t size_) : Topology(N)
+        {
+            for (size_t i = 0; i < size_; ++i)
+                neighborhoods[i % N].Add(i);
+        }
+    };
+
     class Ring : public Topology
     {
     protected:
@@ -70,6 +81,9 @@ namespace psopp
                 neighborhoods[i].Add(i + 1);
                 neighborhoods[i].Add(i - 1);
             }
+            neighborhoods[size_ - 1].Add(size_ - 1);
+            neighborhoods[size_ - 1].Add(0);
+            neighborhoods[size_ - 1].Add(size_ - 2);
         }
     };
 

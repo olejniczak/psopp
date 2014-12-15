@@ -23,10 +23,14 @@ namespace psopp
     >
     class Problem
     {
-    public:
+    protected:
         typedef typename Domain domain_type;
         typedef typename Domain::value_type value_type;
         typedef typename Domain::position_type position_type;
+    protected:
+        virtual void operator()(position_type& position_) const = 0;
+        virtual value_type Min(size_t dim_) const = 0;
+        virtual value_type Max(size_t dim_) const = 0;
     };
 }
 
