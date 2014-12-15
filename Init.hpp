@@ -47,7 +47,7 @@ namespace psopp
     template <class P>
     struct NullPosition : InitPosition<P>
     {
-        void InitPosition(position_type& position_)
+        void InitPosition(typename InitPosition<P>::position_type& position_)
         {
             for (size_t i = 0; i < P::domain_type::Size; ++i)
                 position_.coordinates[i] = 0;
@@ -57,7 +57,7 @@ namespace psopp
     template <class P>
     struct NullVelocity : InitVelocity<P>
     {
-        void InitVelocity(velocity_type& velocity_, const position_type& position_)
+        void InitVelocity(typename InitVelocity<P>::velocity_type& velocity_, const typename InitVelocity<P>::position_type& position_)
         {
             for (size_t i = 0; i < P::domain_type::Size; ++i)
                 velocity_.components[i] = 0;
@@ -67,20 +67,20 @@ namespace psopp
     template <class P>
     struct RandomPosition : InitPosition<P>
     {
-        void InitPosition(position_type& position_)
+        void InitPosition(typename InitPosition<P>::position_type& position_)
         {
             for (size_t i = 0; i < P::domain_type::Size; ++i)
-                position_.coordinates[i] = random.GetReal(Min(i), Max(i));
+                position_.coordinates[i] = this->random.GetReal(this->Min(i), this->Max(i));
         }
     };
 
     template <class P>
     struct RandomVelocity : InitVelocity<P>
     {
-        void InitVelocity(velocity_type& velocity_, const position_type& position_)
+        void InitVelocity(typename InitVelocity<P>::velocity_type& velocity_, const typename InitVelocity<P>::position_type& position_)
         {
             for (size_t i = 0; i < P::domain_type::Size; ++i)
-                velocity_.components[i] = random.GetReal(Min(i), Max(i)) - position_.coordinates[i];
+                velocity_.components[i] = this->random.GetReal(this->Min(i), this->Max(i)) - position_.coordinates[i];
         }
     };
 

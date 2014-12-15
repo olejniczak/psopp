@@ -35,12 +35,12 @@ namespace psopp
 
         IntType GetInt(IntType min_, IntType max_)
         {
-            return id(e, IntDistribution<IntType>::param_type(min_, max_));
+            return id(e, typename IntDistribution<IntType>::param_type(min_, max_));
         }
 
         RealType GetReal(RealType min_, RealType max_)
         {
-            return rd(e, RealDistribution<RealType>::param_type(min_, max_));
+            return rd(e, typename RealDistribution<RealType>::param_type(min_, max_));
         }
 
         IntType GetInt()

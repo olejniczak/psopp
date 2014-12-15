@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ppp" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/ppp" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/ppp" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="../Algorithm.hpp" />
+		<Unit filename="../AlgorithmBase.hpp" />
+		<Unit filename="../CanonicalPSO.hpp" />
+		<Unit filename="../Constrains.hpp" />
+		<Unit filename="../DomainR.hpp" />
+		<Unit filename="../Himmelblau.hpp" />
+		<Unit filename="../IOReader.hpp" />
+		<Unit filename="../Init.hpp" />
+		<Unit filename="../Problem.hpp" />
+		<Unit filename="../Random.hpp" />
+		<Unit filename="../Rosenbrock.hpp" />
+		<Unit filename="../Swarm.hpp" />
+		<Unit filename="../SwarmStructure.hpp" />
+		<Unit filename="../Topology.cpp" />
+		<Unit filename="../Topology.hpp" />
+		<Unit filename="../XmlReader.cpp" />
+		<Unit filename="../XmlReader.hpp" />
+		<Unit filename="../pbPSO.cpp" />
+		<Unit filename="../pso.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

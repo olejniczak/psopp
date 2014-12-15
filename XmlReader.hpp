@@ -14,7 +14,7 @@
 #ifndef PSOPP_XMLREADER_HPP
 #define PSOPP_XMLREADER_HPP
 
-#include <boost\property_tree\ptree.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 namespace psopp
 {

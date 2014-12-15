@@ -22,7 +22,7 @@ namespace psopp
 {
     template <
         int N = 2,
-        typename T = double 
+        typename T = double
     >
     class R
     {
@@ -59,7 +59,7 @@ namespace psopp
         {
             friend class Velocity;
         public:
-            Position& operator+=(const typename Velocity& velocity_)
+            Position& operator+=(const Velocity& velocity_)
             {
                 for (size_t i = 0; i < N; ++i)
                     coordinates[i] += velocity_.components[i];

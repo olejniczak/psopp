@@ -24,7 +24,7 @@ namespace psopp
     class Problem
     {
     public:
-        typedef typename Domain domain_type;
+        typedef Domain domain_type;
         typedef typename Domain::value_type value_type;
         typedef typename Domain::position_type position_type;
     };

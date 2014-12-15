@@ -26,7 +26,7 @@ namespace psopp
     class Himmalblau : public Problem<Domain>
     {
     public:
-        void operator()(position_type& position_)
+        void operator()(typename Domain::position_type& position_)
         {
             position_.fitness = {};
             for (size_t i = 0; i < Domain::Size - 1; ++i)
@@ -37,12 +37,12 @@ namespace psopp
             }
         }
 
-        value_type Min(size_t dim_) const
+        typename Domain::value_type Min(size_t dim_) const
         {
             return -25;
         }
 
-        value_type Max(size_t dim_) const
+        typename Domain::value_type Max(size_t dim_) const
         {
             return 25;
         }

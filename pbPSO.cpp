@@ -1,7 +1,7 @@
 // pbPSO.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
+//#include "stdafx.h"
 
 #include "Algorithm.hpp"
 #include "CanonicalPSO.hpp"
@@ -19,7 +19,7 @@
 using namespace psopp;
 typedef Algorithm<R<30>, Full, BaseParameters, IOReader, CanonicalPSO, StdInit, Rosenbrock, Random<> > real_pso;
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
     real_pso rpso;//"parameters.xml"
     std::cout << rpso.Start(100000);
