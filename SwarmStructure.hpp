@@ -61,7 +61,7 @@ namespace psopp
             void Add(particle_type& particle_)
             {
                 if (!particle_.neighborhood) particle_.neighborhood = this;
-                elements.push_back(&particle_);                
+                elements.push_back(&particle_);
             }
 
             void update_best()
@@ -77,8 +77,8 @@ namespace psopp
             void minmax()
             {
                 auto minmax = std::minmax_element(elements.begin(), elements.end(), Minimize);
-                std::iter_swap(swarm.begin(), minmax.first);
-                std::iter_swap(--swarm.end(), minmax.second);
+                std::iter_swap(elements.begin(), minmax.first);
+                std::iter_swap(--elements.end(), minmax.second);
             }
         private:
             std::vector<const particle_type*> elements;

@@ -30,7 +30,7 @@ namespace psopp
     {
     public:
         Random(RealType min_ = {}, RealType max_ = {})
-            : e(2354), rd(min_, max_), id(static_cast<IntType>(min_), static_cast<IntType>(max_))
+            : e(2354), id(static_cast<IntType>(min_), static_cast<IntType>(max_)), rd(min_, max_)
         {}
 
         IntType GetInt(IntType min_, IntType max_)

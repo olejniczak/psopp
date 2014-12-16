@@ -60,9 +60,9 @@ namespace psopp
     class Multi : public Topology
     {
     protected:
-        explicit Multi(size_t size_) : Topology(N)
+        explicit Multi(std::size_t size_) : Topology(N)
         {
-            for (size_t i = 0; i < size_; ++i)
+            for (std::size_t i = 0; i < size_; ++i)
                 neighborhoods[i % N].Add(i);
         }
     };
@@ -100,7 +100,7 @@ namespace psopp
                 {
                     neighborhoods[i].Add(central);
                     neighborhoods[central].Add(i);
-                }               
+                }
             }
             neighborhoods[central].Set(central);
         }
