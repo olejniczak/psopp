@@ -86,9 +86,11 @@ namespace psopp
         {
             if (scored) return;
             scored = true;
-            auto minmax = std::minmax_element(swarm.begin(), swarm.end(), Minimize);
+            auto send = swarm.end();
+            auto minmax = std::minmax_element(swarm.begin(), send, Minimize);
             std::iter_swap(swarm.begin(), minmax.first);
-            std::iter_swap(--swarm.end(), minmax.second);
+            --send;
+            std::iter_swap(send, minmax.second);
         }
         bool scored;
     private:

@@ -33,6 +33,7 @@
 #ifndef PSOPP_ALGORITHM_HPP
 #define PSOPP_ALGORITHM_HPP
 
+#include <cmath>
 #include <string>
 
 namespace psopp
@@ -97,7 +98,7 @@ namespace psopp
             //swarm.check_velo();
             for (std::size_t i = 0; i < this->swarm.size(); ++i)
                 UpdatePosition(this->swarm[i]);
-            
+
             evaluate();
         }
 
@@ -115,7 +116,7 @@ namespace psopp
         */
         void evaluate()
         {
-            for (auto& p : swarm)
+            for (auto& p : this->swarm)
             {
                 evaluator(p->position);
 
@@ -125,9 +126,9 @@ namespace psopp
                 }
             }
 
-            swarm.scored = false; // TODO: access
-            swarm.minmax();
-            swarm.update_neighborhoods();
+            this->swarm.scored = false; // TODO: access
+            this->swarm.minmax();
+            this->swarm.update_neighborhoods();
         }
 
         /**
@@ -135,7 +136,7 @@ namespace psopp
         */
         void initialize()
         {
-            for (auto& p : swarm)
+            for (auto& p : this->swarm)
             {
                 initializer.InitPosition(p->position);
                 p->best_position = p->position;
