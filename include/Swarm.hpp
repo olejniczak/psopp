@@ -5,7 +5,7 @@
 * See <WEBSITE> for documentation.
 *
 * @author Copyright &copy 2011 Przemys³aw Olejniczak.
-* @version <VERSION>
+* @version 0.2.0
 * @date <DATE>
 *
 * Distributed under the Boost Software License, Version 1.0.
@@ -16,38 +16,40 @@
 #ifndef PSOPP_SWARM_HPP
 #define PSOPP_SWARM_HPP
 
-#include <vector>
 #include <memory>
 #include <algorithm>
+
+#include "SwarmStructure.hpp"
+//#include "MiniMaxi.hpp"
 
 namespace psopp
 {
     template <
-        class Structure,
-        class Initializer,
-        class Evaluator
+		size_t Size,
+		class Domain,
+        class Topo//,
+        //class Pred = Minimize<Domain, typename SwarmStructure<Domain, Topo>::particle_type>
     >
-    class Swarm
-        : public Structure
+	class Swarm : public SwarmStructure<Domain, Topo>
     {
+        typedef SwarmStructure<Domain, Topo> Structure;
     public:
+        typedef Domain domain_type;
         typedef typename Structure::particle_type particle_type;
         typedef typename Structure::Neighborhood neighborhood_type;
         typedef typename std::unique_ptr<particle_type> particle_ptr_type;
-        typedef typename std::vector<particle_ptr_type> container_type;
+        typedef typename std::array<particle_ptr_type, Size> container_type;
 
         static bool Minimize(const particle_ptr_type& a, const particle_ptr_type& b)
         {
             return a->position.fitness < b->position.fitness;
         }
     public:
-        explicit Swarm(size_t size_)
-            : Structure(size_), scored(false)
+        explicit Swarm()
+			: Structure(Size), scored(false)
         {
-            for (size_t i = 0; i < size_; ++i)
-                swarm.push_back(std::unique_ptr<particle_type>(new particle_type()));
-
-            initialize();
+			for (size_t i = 0; i < Size; ++i)
+				swarm[i] = particle_ptr_type(new particle_type());
 
             for (size_t i = 0; i < this->neighborhoods.Count(); ++i)
             {
@@ -80,35 +82,6 @@ namespace psopp
             return *swarm[index_];
         }
 
-        void evaluate()
-        {
-            for (auto& p : swarm)
-            {
-                evaluator(p->position);
-                //p->best_position = std::min(p->position, p->best_position, Minimize);
-                if (p->position.fitness < p->best_position.fitness)
-                {
-                    p->best_position = p->position;
-                }
-            }
-            scored = false;
-            minmax();
-            this->update_neighborhoods();
-        }
-
-    private:
-        void initialize()
-        {
-            for (auto& p : swarm)
-            {
-                initializer.InitPosition(p->position);
-                p->best_position = p->position;
-                evaluator(p->best_position);
-                initializer.InitVelocity(p->velocity, p->position);
-            }
-            evaluate();
-        }
-
         void minmax()
         {
             if (scored) return;
@@ -117,12 +90,10 @@ namespace psopp
             std::iter_swap(swarm.begin(), minmax.first);
             std::iter_swap(--swarm.end(), minmax.second);
         }
-    private:
-        Initializer initializer;
-        Evaluator evaluator;
-
         bool scored;
+    private:
         container_type swarm;
+        //Pred predicate;
     };
 }
 

@@ -9,14 +9,19 @@
 #include "MapReader.hpp"
 #include "Random.hpp"
 #include "Rosenbrock.hpp"
+#include "Swarm.hpp"
 #include "Topology.hpp"
 
 using namespace psopp;
-typedef Algorithm<R2, Full, BaseParameters, MapReader, CanonicalPSO, StdInit, Rosenbrock, Random<> > real_pso_full;
-typedef Algorithm<R2, Star, BaseParameters, MapReader, CanonicalPSO, StdInit, Rosenbrock, Random<> > real_pso_star;
-typedef Algorithm<R2, Multi<2>, BaseParameters, MapReader, CanonicalPSO, StdInit, Rosenbrock, Random<> > real_pso_2;
-typedef Algorithm<R2, Multi<3>, BaseParameters, MapReader, CanonicalPSO, StdInit, Rosenbrock, Random<> > real_pso_3;
-typedef Algorithm<R2, Multi<4>, BaseParameters, MapReader, CanonicalPSO, StdInit, Rosenbrock, Random<> > real_pso_4;
+
+template <class Topo>
+using SwarmTopo = Swarm < 20, R2, Topo > ;
+
+typedef Algorithm<SwarmTopo<Full>, CanonicalPSO, Rosenbrock, StdInit, Random<> > real_pso_full;
+typedef Algorithm<SwarmTopo<Star>, CanonicalPSO, Rosenbrock, StdInit, Random<> > real_pso_star;
+typedef Algorithm<SwarmTopo<Multi<2>>, CanonicalPSO, Rosenbrock, StdInit, Random<> > real_pso_2;
+typedef Algorithm<SwarmTopo<Multi<3>>, CanonicalPSO, Rosenbrock, StdInit, Random<> > real_pso_3;
+typedef Algorithm<SwarmTopo<Multi<4>>, CanonicalPSO, Rosenbrock, StdInit, Random<> > real_pso_4;
 
 int main()
 {

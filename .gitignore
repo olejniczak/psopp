@@ -151,3 +151,4 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 html/
+*.7z

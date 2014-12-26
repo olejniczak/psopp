@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExTopology", "ExTopology\ExTopology.vcxproj", "{B244084D-AF9A-4A0C-BDA5-16799558F479}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExSwarm", "ExSwarm\ExSwarm.vcxproj", "{AE002CF0-CF2B-4564-A7BB-F56380612B05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,6 +17,10 @@ Global
 		{B244084D-AF9A-4A0C-BDA5-16799558F479}.Debug|Win32.Build.0 = Debug|Win32
 		{B244084D-AF9A-4A0C-BDA5-16799558F479}.Release|Win32.ActiveCfg = Release|Win32
 		{B244084D-AF9A-4A0C-BDA5-16799558F479}.Release|Win32.Build.0 = Release|Win32
+		{AE002CF0-CF2B-4564-A7BB-F56380612B05}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AE002CF0-CF2B-4564-A7BB-F56380612B05}.Debug|Win32.Build.0 = Debug|Win32
+		{AE002CF0-CF2B-4564-A7BB-F56380612B05}.Release|Win32.ActiveCfg = Release|Win32
+		{AE002CF0-CF2B-4564-A7BB-F56380612B05}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

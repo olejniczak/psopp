@@ -5,7 +5,7 @@
  * See <WEBSITE> for documentation.
  *
  * @author Copyright &copy 2014 Przemys³aw Olejniczak.
- * @version <VERSION>
+ * @version 0.2.0
  * @date <DATE>
  *
  * Distributed under the Boost Software License, Version 1.0.

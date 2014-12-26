@@ -5,7 +5,7 @@
 * See <WEBSITE> for documentation.
 *
 * @author Copyright &copy 2011 Przemys³aw Olejniczak.
-* @version <VERSION>
+* @version 0.2.0
 * @date <DATE>
 *
 * Distributed under the Boost Software License, Version 1.0.
@@ -16,10 +16,13 @@
 #ifndef PSOPP_CANONICALPSO_HPP
 #define PSOPP_CANONICALPSO_HPP
 
+#include "BaseParameters.hpp"
+#include "MapReader.hpp"
+
 namespace psopp
 {
     template<class Base>
-    class CanonicalPSO : public Base
+    class CanonicalPSO : public Base, public BaseParameters<MapReader>
     {
     public:
         void UpdateVelocity(typename Base::particle_type& particle_)

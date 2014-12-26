@@ -5,7 +5,7 @@
 * See <WEBSITE> for documentation.
 *
 * @author Copyright &copy 2011 Przemys³aw Olejniczak.
-* @version <VERSION>
+* @version 0.2.0
 * @date <DATE>
 *
 * Distributed under the Boost Software License, Version 1.0.
@@ -69,8 +69,6 @@ namespace psopp
                 const particle_type* const m = *std::min_element(elements.begin(), elements.end(), Minimize);
                 const particle_type* const b = &best;
                 best = *std::min(m, b, Minimize);
-
-                //std::cout << best.position.fitness << std::endl;
             }
             particle_type best;
 
@@ -88,7 +86,6 @@ namespace psopp
             : Topo(size_)
         {
         }
-    protected:
         void update_neighborhoods()
         {
             for (auto& n : nhoods)
@@ -96,6 +93,7 @@ namespace psopp
                 n->update_best();
             }
         }
+    protected:
         std::vector<std::unique_ptr<Neighborhood>> nhoods;
     };
 
