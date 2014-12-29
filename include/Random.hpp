@@ -14,48 +14,53 @@
 #ifndef PSOPP_RANDOM_HPP
 #define PSOPP_RANDOM_HPP
 
+#include <chrono>
 #include <random>
 
 namespace psopp
 {
     template
     <
-        class IntType = int,
-        class RealType = double,
-        class Engine = std::default_random_engine,
-        template <class> class IntDistribution = std::uniform_int_distribution,
-        template <class> class RealDistribution = std::uniform_real_distribution
+        class TIntType = int,
+        class TRealType = double,
+        class TEngine = std::default_random_engine,
+        template <class> class TIntDistribution = std::uniform_int_distribution,
+        template <class> class TRealDistribution = std::uniform_real_distribution
     >
     class Random
     {
     public:
-        Random(RealType min_ = {}, RealType max_ = {})
-            : e(2354), id(static_cast<IntType>(min_), static_cast<IntType>(max_)), rd(min_, max_)
+        //typedef typename TEngine::result_type seed_type;
+    public:
+        Random(TRealType min_ = {}, TRealType max_ = {})
+            : engine(static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count())),
+              int_distribution(static_cast<TIntType>(min_), static_cast<TIntType>(max_)), 
+              real_distribution(min_, max_)
         {}
 
-        IntType GetInt(IntType min_, IntType max_)
+        TIntType GetInt(TIntType min_, TIntType max_)
         {
-            return id(e, typename IntDistribution<IntType>::param_type(min_, max_));
+            return int_distribution(engine, typename TIntDistribution<TIntType>::param_type(min_, max_));
         }
 
-        RealType GetReal(RealType min_, RealType max_)
+        TRealType GetReal(TRealType min_, TRealType max_)
         {
-            return rd(e, typename RealDistribution<RealType>::param_type(min_, max_));
+            return real_distribution(engine, typename TRealDistribution<TRealType>::param_type(min_, max_));
         }
 
-        IntType GetInt()
+        TIntType GetInt()
         {
-            return id(e);
+            return int_distribution(engine);
         }
 
-        RealType GetReal()
+        TRealType GetReal()
         {
-            return rd(e);
+            return real_distribution(engine);
         }
 
-        Engine e;
-        IntDistribution<IntType> id;
-        RealDistribution<RealType> rd;
+        TEngine engine;
+        TIntDistribution<TIntType> int_distribution;
+        TRealDistribution<TRealType> real_distribution;
     };
 }
 

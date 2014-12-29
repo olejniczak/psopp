@@ -84,6 +84,7 @@
     <ClInclude Include="..\..\..\include\Algorithm.hpp" />
     <ClInclude Include="..\..\..\include\BaseParameters.hpp" />
     <ClInclude Include="..\..\..\include\CanonicalPSO.hpp" />
+    <ClInclude Include="..\..\..\include\ConstrictedPSO.hpp" />
     <ClInclude Include="..\..\..\include\Constrains.hpp" />
     <ClInclude Include="..\..\..\include\DomainR.hpp" />
     <ClInclude Include="..\..\..\include\Himmelblau.hpp" />

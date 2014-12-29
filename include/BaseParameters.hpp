@@ -20,12 +20,12 @@
 
 namespace psopp
 {
-    template <class Reader>
-    class BaseParameters : public Reader
+    template <class TReader>
+    class BaseParameters : public TReader
     {
     public:
-        BaseParameters() : Reader() {}
-        BaseParameters(const std::string& parameters_) : Reader(parameters_) {}
+        BaseParameters() : TReader() {}
+        BaseParameters(const std::string& parameters_) : TReader(parameters_) {}
         void Read()
         {
             inertia_weight = this->template get<double>("inertia_weight");

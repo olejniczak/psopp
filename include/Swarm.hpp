@@ -26,15 +26,14 @@ namespace psopp
 {
     template <
 		size_t Size,
-		class Domain,
-        class Topo//,
-        //class Pred = Minimize<Domain, typename SwarmStructure<Domain, Topo>::particle_type>
+		class TDomain,
+        class TTopology
     >
-	class Swarm : public SwarmStructure<Domain, Topo>
+    class Swarm : public SwarmStructure<TDomain, TTopology>
     {
-        typedef SwarmStructure<Domain, Topo> Structure;
+        typedef SwarmStructure<TDomain, TTopology> Structure;
     public:
-        typedef Domain domain_type;
+        typedef TDomain domain_type;
         typedef typename Structure::particle_type particle_type;
         typedef typename Structure::Neighborhood neighborhood_type;
         typedef typename std::unique_ptr<particle_type> particle_ptr_type;
@@ -69,8 +68,8 @@ namespace psopp
         const particle_type& worst() { minmax(); return back(); }
         const particle_type& best() const { return front(); }
         const particle_type& worst() const {  return back(); }
-        typename container_type::iterator begin() { return swarm.begin(); } // ?
-        typename container_type::iterator end() { return swarm.end(); } // ?
+        typename container_type::iterator begin() { return swarm.begin(); }
+        typename container_type::iterator end() { return swarm.end(); }
 
         const particle_type& operator[] (size_t index_) const
         {
@@ -95,7 +94,6 @@ namespace psopp
         bool scored;
     private:
         container_type swarm;
-        //Pred predicate;
     };
 }
 

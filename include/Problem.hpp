@@ -19,16 +19,16 @@
 namespace psopp
 {
     template<
-        class Domain
+        class TDomain
     >
     class Problem
     {
     public:
-        typedef Domain domain_type;
-        typedef typename Domain::value_type value_type;
-        typedef typename Domain::position_type position_type;
+        typedef TDomain domain_type;
+        typedef typename TDomain::value_type value_type;
+        typedef typename TDomain::position_type position_type;
     protected:
-        virtual void operator()(typename Domain::position_type& position_) const = 0;
+        virtual void operator()(typename TDomain::position_type& position_) const = 0;
         virtual value_type Min(std::size_t dim_) const = 0;
         virtual value_type Max(std::size_t dim_) const = 0;
     };

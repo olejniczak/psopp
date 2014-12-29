@@ -41,29 +41,30 @@ namespace psopp
     /**
      *
      */
-	template <class SWARM, class RNG>
+	template <class TSwarm, class TRandom>
     class SwarmHolder
     {
 	protected:
-        typedef typename SWARM::particle_type particle_type;
-        SWARM swarm;
-        RNG random;
+        typedef typename TSwarm::particle_type particle_type;
+        TSwarm swarm;
+        TRandom random;
     };
 
     /**
      *
      */
     template <
-        class SWARM,
-        template <class> class Type,
-        template <class> class Evaluator,
-        template <class> class Initializer,
-        class RandomNumberGenerator
+        class TSwarm,
+        template <class> class TVariant,
+        template <class> class TEvaluator,
+        template <class, class> class TInitializer,
+        class TRandom
     >
-    class Algorithm : public Type<SwarmHolder<SWARM, RandomNumberGenerator>>
+    class Algorithm : public TVariant<SwarmHolder<TSwarm, TRandom>>
     {
-        typedef typename SWARM::particle_type particle_type;
-        typedef typename SWARM::domain_type domain_type;
+        //typedef typename TRandom::seed_type seed_type;
+        typedef typename TSwarm::particle_type particle_type;
+        typedef typename TSwarm::domain_type domain_type;
     public:
        /**
         *
@@ -77,9 +78,9 @@ namespace psopp
        /**
         *
         */
-        int Start(int terminate_)
+        int Start(std::size_t terminate_)
         {
-            int step = 0;
+            std::size_t step = 0;
             while (step++ < terminate_)
             {
                 Step();
@@ -146,9 +147,9 @@ namespace psopp
             evaluate();
         }
 	private:
-		RandomNumberGenerator random;
-        Evaluator<domain_type> evaluator;
-        Initializer<Evaluator<domain_type>> initializer;
+        TRandom random;
+        TEvaluator<domain_type> evaluator;
+        TInitializer<TEvaluator<domain_type>, TRandom> initializer;
     };
 }
 #endif // PSOPP_ALGORITHM_HPP

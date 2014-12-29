@@ -20,82 +20,85 @@
 
 namespace psopp
 {
-    template <class P>
+    template <class TEvaluator, class TRandom>
     struct InitBase
     {
     protected:
-        typedef typename P::domain_type domain_type;
+        typedef typename TEvaluator::domain_type domain_type;
         typedef typename domain_type::position_type position_type;
         typedef typename domain_type::velocity_type velocity_type;
         typedef typename domain_type::value_type value_type;
     protected:
-        value_type Min(size_t dim_) const { return problem.Min(dim_); }
-        value_type Max(size_t dim_) const { return problem.Max(dim_); }
-        Random<> random;
+        value_type Min(size_t dim_) const { return evaluator.Min(dim_); }
+        value_type Max(size_t dim_) const { return evaluator.Max(dim_); }
+    protected:
+        TRandom random;
     private:
-        P problem;
+        TEvaluator evaluator;
     };
 
-    template <class P>
-    struct InitPosition : virtual InitBase<P>
+    template <class TEvaluator, class TRandom>
+    struct InitPosition : virtual InitBase<TEvaluator, TRandom>
     {};
 
-    template <class P>
-    struct InitVelocity : virtual InitBase<P>
+    template <class TEvaluator, class TRandom>
+    struct InitVelocity : virtual InitBase<TEvaluator, TRandom>
     {};
 
-    template <class P>
-    struct NullPosition : InitPosition<P>
+    template <class TEvaluator, class TRandom>
+    struct NullPosition : InitPosition<TEvaluator, TRandom>
     {
-        void InitPosition(typename InitPosition<P>::position_type& position_)
+        void InitPosition(typename InitPosition<TEvaluator, TRandom>::position_type& position_)
         {
-            for (size_t i = 0; i < P::domain_type::Size; ++i)
+            for (size_t i = 0; i < TEvaluator::domain_type::Size; ++i)
                 position_.coordinates[i] = 0;
         }
     };
 
-    template <class P>
-    struct NullVelocity : InitVelocity<P>
+    template <class TEvaluator, class TRandom>
+    struct NullVelocity : InitVelocity<TEvaluator, TRandom>
     {
-        void InitVelocity(typename InitVelocity<P>::velocity_type& velocity_, const typename InitVelocity<P>::position_type& position_)
+        void InitVelocity(typename InitVelocity<TEvaluator, TRandom>::velocity_type& velocity_, const typename InitVelocity<TEvaluator, TRandom>::position_type& position_)
         {
-            for (size_t i = 0; i < P::domain_type::Size; ++i)
+            for (size_t i = 0; i < TEvaluator::domain_type::Size; ++i)
                 velocity_.components[i] = 0;
         }
     };
 
-    template <class P>
-    struct RandomPosition : InitPosition<P>
+    template <class TEvaluator, class TRandom>
+    struct RandomPosition : InitPosition<TEvaluator, TRandom>
     {
-        void InitPosition(typename InitPosition<P>::position_type& position_)
+        void InitPosition(typename InitPosition<TEvaluator, TRandom>::position_type& position_)
         {
-            for (size_t i = 0; i < P::domain_type::Size; ++i)
+            for (size_t i = 0; i < TEvaluator::domain_type::Size; ++i)
                 position_.coordinates[i] = this->random.GetReal(this->Min(i), this->Max(i));
         }
     };
 
-    template <class P>
-    struct RandomVelocity : InitVelocity<P>
+    template <class TEvaluator, class TRandom>
+    struct RandomVelocity : InitVelocity<TEvaluator, TRandom>
     {
-        void InitVelocity(typename InitVelocity<P>::velocity_type& velocity_, const typename InitVelocity<P>::position_type& position_)
+        void InitVelocity(typename InitVelocity<TEvaluator, TRandom>::velocity_type& velocity_, const typename InitVelocity<TEvaluator, TRandom>::position_type& position_)
         {
-            for (size_t i = 0; i < P::domain_type::Size; ++i)
+            for (size_t i = 0; i < TEvaluator::domain_type::Size; ++i)
                 velocity_.components[i] = this->random.GetReal(this->Min(i), this->Max(i)) - position_.coordinates[i];
         }
     };
 
     template <
-        class Problem,
-        template <class> class PInit,
-        template <class> class VInit
+        class TEvaluator,
+        class TRandom,
+        template <class, class> class TInitPosition,
+        template <class, class> class TInitVelocity
     >
     class Initializer
-        : public PInit<Problem>,
-          public VInit<Problem>
+        : public TInitPosition<TEvaluator, TRandom>,
+          public TInitVelocity<TEvaluator, TRandom>
     {
+
     };
 
-    template <class P> using StdInit = Initializer<P, RandomPosition, RandomVelocity>;
+    template <class TEvaluator, class TRandom> using StdInit = Initializer<TEvaluator, TRandom, RandomPosition, RandomVelocity>;
 }
 
 #endif // PSOPP_INIT_HPP
