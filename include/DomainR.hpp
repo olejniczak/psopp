@@ -20,6 +20,9 @@
 
 namespace psopp
 {
+   /**
+    *
+    */
     template <
         int N = 2,
         typename T = double
@@ -27,6 +30,9 @@ namespace psopp
     class R
     {
     public:
+       /**
+        *
+        */
         class Velocity
         {
             friend class R::Position;
@@ -51,10 +57,13 @@ namespace psopp
                     components[i] += velocity_.components[i];
                 return *this;
             }
-        ///private:
+        public:
             std::array<T, N> components{};
         };
 
+       /**
+        *
+        */
         class Position
         {
             friend class Velocity;
@@ -70,7 +79,7 @@ namespace psopp
             {
                 return Velocity(*this, other_);
             }
-        ///private:
+        public:
             std::array<T, N> coordinates{};
             T fitness;
         };
@@ -82,6 +91,9 @@ namespace psopp
         static const int Size = N;
     };
 
+   /**
+    *
+    */
     typedef R<> R2;
 }
 

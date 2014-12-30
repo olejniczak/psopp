@@ -110,9 +110,8 @@ namespace psopp
         {
             particle_.position += particle_.velocity;
         }
-
     private:
-        /**
+       /**
         *
         */
         void evaluate()
@@ -132,7 +131,7 @@ namespace psopp
             this->swarm.update_neighborhoods();
         }
 
-        /**
+       /**
         *
         */
         void initialize()

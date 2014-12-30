@@ -20,7 +20,6 @@
 #include <algorithm>
 
 #include "SwarmStructure.hpp"
-//#include "MiniMaxi.hpp"
 
 namespace psopp
 {

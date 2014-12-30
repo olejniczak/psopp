@@ -60,7 +60,10 @@ namespace psopp
 
             void Add(particle_type& particle_)
             {
-                if (!particle_.neighborhood) particle_.neighborhood = this;
+                if (!particle_.neighborhood)
+                {
+                    particle_.neighborhood = this;
+                }
                 elements.push_back(&particle_);
             }
 
