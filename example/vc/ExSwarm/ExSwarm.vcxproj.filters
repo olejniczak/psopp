@@ -74,5 +74,8 @@
     <ClInclude Include="..\..\..\include\ConstrictedPSO.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\Sphere.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

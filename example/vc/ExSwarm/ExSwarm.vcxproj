@@ -96,6 +96,7 @@
     <ClInclude Include="..\..\..\include\Problem.hpp" />
     <ClInclude Include="..\..\..\include\Random.hpp" />
     <ClInclude Include="..\..\..\include\Rosenbrock.hpp" />
+    <ClInclude Include="..\..\..\include\Sphere.hpp" />
     <ClInclude Include="..\..\..\include\Swarm.hpp" />
     <ClInclude Include="..\..\..\include\SwarmStructure.hpp" />
     <ClInclude Include="..\..\..\include\Topology.hpp" />
