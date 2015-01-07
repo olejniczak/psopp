@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExTopology", "ExTopology\Ex
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExSwarm", "ExSwarm\ExSwarm.vcxproj", "{AE002CF0-CF2B-4564-A7BB-F56380612B05}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExPSOTSP", "ExPSOTSP\ExPSOTSP.vcxproj", "{E1B25C07-80ED-40D8-A6E1-DF824F4EE64F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{AE002CF0-CF2B-4564-A7BB-F56380612B05}.Debug|Win32.Build.0 = Debug|Win32
 		{AE002CF0-CF2B-4564-A7BB-F56380612B05}.Release|Win32.ActiveCfg = Release|Win32
 		{AE002CF0-CF2B-4564-A7BB-F56380612B05}.Release|Win32.Build.0 = Release|Win32
+		{E1B25C07-80ED-40D8-A6E1-DF824F4EE64F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E1B25C07-80ED-40D8-A6E1-DF824F4EE64F}.Debug|Win32.Build.0 = Debug|Win32
+		{E1B25C07-80ED-40D8-A6E1-DF824F4EE64F}.Release|Win32.ActiveCfg = Release|Win32
+		{E1B25C07-80ED-40D8-A6E1-DF824F4EE64F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
