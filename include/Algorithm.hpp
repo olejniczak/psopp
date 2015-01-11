@@ -4,6 +4,7 @@
 * Biblioteka programistyczna do optymalizacji za pomoc¹ algorytmów PSO (particle swarm optimization).
 * @par Praca dyplomowa magisterska
 * @par POLITECHNIKA WARSZAWSKA
+* \image html Logo_PW.jpg
 * @par Wydzia³ Elektroniki i Technik Informacyjnych
 * @par Instytut Automatyki
 * @par Temat: Œrodowisko programistyczne do optymalizacji przy wykorzystaniu algorytmów inteligencji masowej.
@@ -36,8 +37,19 @@
 #include <cmath>
 #include <string>
 
+#include "Random.hpp"
+
 namespace psopp
 {
+    template <class TParticle>
+    struct NoDump
+    {
+        void DumpDirectory(const std::string&) {}
+    protected:
+        void Next(size_t) {}
+        void Dump(const TParticle&) {}
+    };
+
     /**
      *
      */
@@ -58,9 +70,11 @@ namespace psopp
         template <class> class TVariant,
         template <class> class TEvaluator,
         template <class, class> class TInitializer,
-        class TRandom
+        template <class> class TDump = NoDump,
+        class TRandom = Random<>
     >
-    class Algorithm : public TVariant<SwarmHolder<TSwarm, TRandom>>
+    class Algorithm : public TVariant<SwarmHolder<TSwarm, TRandom>>, 
+                      public TDump<typename TSwarm::particle_type>
     {
         //typedef typename TRandom::seed_type seed_type;
         typedef typename TSwarm::particle_type particle_type;
@@ -83,6 +97,7 @@ namespace psopp
             std::size_t step = 0;
             while (step++ < terminate_)
             {
+                Next(step);
                 Step();
                 if (std::fabs(this->swarm.worst().position.fitness - this->swarm.best().position.fitness) < 0.001) return step;
             }
@@ -99,6 +114,8 @@ namespace psopp
             //swarm.check_velo();
             for (std::size_t i = 0; i < this->swarm.size(); ++i)
                 UpdatePosition(this->swarm[i]);
+            for (std::size_t i = 0; i < this->swarm.size(); ++i)
+                Dump(this->swarm[i]);
 
             evaluate();
         }

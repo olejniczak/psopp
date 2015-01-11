@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AE002CF0-CF2B-4564-A7BB-F56380612B05}</ProjectGuid>
+    <ProjectGuid>{219D2E1B-DFF9-4462-B5FC-C6D11170239A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ExSwarm</RootNamespace>
+    <RootNamespace>ExTestSuite</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -53,6 +53,9 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\..\include</AdditionalIncludeDirectories>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -69,6 +72,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\..\include</AdditionalIncludeDirectories>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -78,35 +82,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ExSwarm.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\include\Ackley.hpp" />
-    <ClInclude Include="..\..\..\include\Algorithm.hpp" />
-    <ClInclude Include="..\..\..\include\BaseParameters.hpp" />
-    <ClInclude Include="..\..\..\include\CanonicalPSO.hpp" />
-    <ClInclude Include="..\..\..\include\ConstrictedPSO.hpp" />
-    <ClInclude Include="..\..\..\include\Constrains.hpp" />
-    <ClInclude Include="..\..\..\include\DomainR.hpp" />
-    <ClInclude Include="..\..\..\include\DumpFile.hpp" />
-    <ClInclude Include="..\..\..\include\gnuplot.hpp" />
-    <ClInclude Include="..\..\..\include\Himmelblau.hpp" />
-    <ClInclude Include="..\..\..\include\Init.hpp" />
-    <ClInclude Include="..\..\..\include\IOReader.hpp" />
-    <ClInclude Include="..\..\..\include\MapReader.hpp" />
-    <ClInclude Include="..\..\..\include\MiniMaxi.hpp" />
-    <ClInclude Include="..\..\..\include\OptiSuite.hpp" />
-    <ClInclude Include="..\..\..\include\ParserEvaluator.hpp" />
-    <ClInclude Include="..\..\..\include\Problem.hpp" />
-    <ClInclude Include="..\..\..\include\Random.hpp" />
-    <ClInclude Include="..\..\..\include\Rosenbrock.hpp" />
-    <ClInclude Include="..\..\..\include\Sphere.hpp" />
-    <ClInclude Include="..\..\..\include\StyblinskiTang.hpp" />
-    <ClInclude Include="..\..\..\include\Swarm.hpp" />
-    <ClInclude Include="..\..\..\include\SwarmStructure.hpp" />
-    <ClInclude Include="..\..\..\include\Topology.hpp" />
-    <ClInclude Include="..\..\..\include\TypeInfo.hpp" />
-    <ClInclude Include="..\..\..\include\Visualizer.hpp" />
+    <ClCompile Include="..\..\ExTestSuite.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
