@@ -84,6 +84,34 @@
   <ItemGroup>
     <ClCompile Include="..\..\ExTestSuite.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\Ackley.hpp" />
+    <ClInclude Include="..\..\..\include\Algorithm.hpp" />
+    <ClInclude Include="..\..\..\include\BaseParameters.hpp" />
+    <ClInclude Include="..\..\..\include\CanonicalPSO.hpp" />
+    <ClInclude Include="..\..\..\include\Constrains.hpp" />
+    <ClInclude Include="..\..\..\include\ConstrictedPSO.hpp" />
+    <ClInclude Include="..\..\..\include\DomainR.hpp" />
+    <ClInclude Include="..\..\..\include\DumpFile.hpp" />
+    <ClInclude Include="..\..\..\include\gnuplot.hpp" />
+    <ClInclude Include="..\..\..\include\Himmelblau.hpp" />
+    <ClInclude Include="..\..\..\include\Init.hpp" />
+    <ClInclude Include="..\..\..\include\IOReader.hpp" />
+    <ClInclude Include="..\..\..\include\MapReader.hpp" />
+    <ClInclude Include="..\..\..\include\MiniMaxi.hpp" />
+    <ClInclude Include="..\..\..\include\OptiSuite.hpp" />
+    <ClInclude Include="..\..\..\include\ParserEvaluator.hpp" />
+    <ClInclude Include="..\..\..\include\Problem.hpp" />
+    <ClInclude Include="..\..\..\include\Random.hpp" />
+    <ClInclude Include="..\..\..\include\ReportGen.hpp" />
+    <ClInclude Include="..\..\..\include\Rosenbrock.hpp" />
+    <ClInclude Include="..\..\..\include\Sphere.hpp" />
+    <ClInclude Include="..\..\..\include\StyblinskiTang.hpp" />
+    <ClInclude Include="..\..\..\include\Swarm.hpp" />
+    <ClInclude Include="..\..\..\include\SwarmStructure.hpp" />
+    <ClInclude Include="..\..\..\include\Topology.hpp" />
+    <ClInclude Include="..\..\..\include\Visualizer.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

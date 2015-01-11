@@ -1,10 +1,10 @@
 /**
 *
-* See <WEBSITE> for documentation.
+* See http://przole.github.io/psopp for documentation.
 *
 * @author Copyright &copy 2011 Przemys³aw Olejniczak.
 * @version 0.2.0
-* @date <DATE>
+* @date 2015.01.11
 *
 * Distributed under the Boost Software License, Version 1.0.
 * (See accompanying file LICENSE_1_0.txt or copy at
@@ -14,6 +14,8 @@
 #ifndef PSOPP_OPTISUITE_HPP
 #define PSOPP_OPTISUITE_HPP
 
+#include <direct.h>
+
 #include "Ackley.hpp"
 #include "Algorithm.hpp"
 #include "CanonicalPSO.hpp"
@@ -21,6 +23,7 @@
 #include "DomainR.hpp"
 #include "DumpFile.hpp"
 #include "Init.hpp"
+#include "ReportGen.hpp"
 #include "Rosenbrock.hpp"
 #include "Sphere.hpp"
 #include "StyblinskiTang.hpp"
@@ -86,14 +89,24 @@ namespace psopp
     using TAVariantFull20 = Algorithm<SwarmTopo20<Full>, TVariant, TProblem, StdInit, DumpFile>;
 
 
+
+    //std::string SubDirectory(size_t num_)
+    //{
+    //    std::stringstream ss;
+    //    ss << std::setfill('0') << std::setw(2) << num_;
+    //    return ss.str();
+    //}
+
     /**
-     * Helper function - number to string
+     * Helper function - create directory
      */
-    std::string SubDirectory(size_t num_)
+    void CreateDirectory(const std::string& dir_)
     {
-        std::stringstream ss;
-        ss << std::setfill('0') << std::setw(2) << num_;
-        return ss.str();
+#if defined(_WIN32) || defined(_WIN64)
+        _mkdir(dir_.c_str());
+#else 
+        mkdir(dir_.c_str(), 0777);
+#endif
     }
 
     /**
@@ -112,14 +125,21 @@ namespace psopp
     /**
      * @class ProblemPack
      */
-    template<template <template <class> class> class G1, template <class> class P, template <class> class... Ps>
-    struct ProblemPack<G1, P, Ps...> : ProblemPack<G1, Ps...>{
+    template
+    <
+        template <template <class> class> class G1, 
+        template <class> class P, 
+        template <class> class... Ps
+    >
+    struct ProblemPack<G1, P, Ps...> : ProblemPack<G1, Ps...>
+    {
         ProblemPack(const std::string& name_, size_t steps_)
-        : ProblemPack<G1, Ps...>(name_, steps_), sub(name_ + "\\P" + SubDirectory(sizeof...(Ps)), steps_)
+            : ProblemPack<G1, Ps...>(name_, steps_),
+              pack(name_ + "\\P" + SubDirectory(sizeof...(Ps)), steps_)
         {
         }
     private:
-        G1<P> sub;
+        G1<P> pack;
     };
 
     /**
@@ -149,10 +169,13 @@ namespace psopp
         Pack1P(const std::string& name_, size_t steps_)
             : Pack1P<TA, P, Ts...>(name_, steps_)
         {
-            inst.DumpDirectory(name_ + "\\T" + SubDirectory(sizeof...(Ts)));
-            inst.Start(steps_);
+            CreateDirectory(name_);
+            std::string dir(name_ + "\\T" + SubDirectory(sizeof...(Ts)));
+            CreateDirectory(dir);
+            instance.DumpDirectory(dir);
+            instance.Start(steps_);
         }
-        TA<T, P> inst;
+        TA<T, P> instance;
     };
 
 
@@ -185,21 +208,44 @@ namespace psopp
         Pack2P(const std::string& name_, size_t steps_)
         : Pack2P<TA, P, Ts...>(name_, steps_)
         {
-            inst.DumpDirectory(name_ + "\\T" + SubDirectory(sizeof...(Ts)));
-            inst.Start(steps_);
+            CreateDirectory(name_);
+            std::string dir(name_ + "\\T" + SubDirectory(sizeof...(Ts)));
+            CreateDirectory(dir);
+            instance.DumpDirectory(dir);
+            instance.Start(steps_);
         }
-        TA<T, P> inst;
+        TA<T, P> instance;
     };
 
 
     /**
      * @class OptimizationSuiteBase
      */
+    struct NoReport
+    {
+        NoReport(std::size_t problems_count_, std::size_t params_count_, std::size_t step_count_) {}
+        void Generate(const std::string& directory_, const std::string& report_dir_) {}
+    };
     struct OptimizationSuiteBase
     {
+        char* const REPORT_DIR = "\\report";
+
         OptimizationSuiteBase(const std::string& directory_, std::size_t steps_)
             : directory(directory_), step_count(steps_)
-        {}
+        {
+            CreateDirectory(directory);
+        }
+
+        template <class TGenerator = NoReport>
+        void GenerateReport()
+        {
+            CreateDirectory(directory + REPORT_DIR);
+            TGenerator report_gen(ProblemsCount(), ParamsCount(), step_count);
+            report_gen.Generate(directory, REPORT_DIR);
+        }
+    protected:
+        virtual std::size_t ProblemsCount() const = 0;
+        virtual std::size_t ParamsCount() const = 0;
     protected:
         std::string directory;
         std::size_t step_count;
@@ -222,11 +268,16 @@ namespace psopp
         template <template <class> class... Ps>
         void Optimize()
         {
+            problems_count = sizeof...(Ps);
             ProblemPack<Pack, Ps...> opti(directory, step_count);
         }
+    protected:
+        virtual std::size_t ProblemsCount() const { return problems_count; };
+        virtual std::size_t ParamsCount() const { return sizeof...(Ts); };
     private:
         template <template <class> class TProblem>
         using Pack = Pack1P < TAlgorithm, TProblem, Ts...>;
+        std::size_t problems_count = {};
     };
 
     /**
@@ -240,17 +291,22 @@ namespace psopp
     struct OptimizationSuite2 : OptimizationSuiteBase
     {
         OptimizationSuite2(const std::string& directory_, std::size_t steps_)
-            : OptimizationSuite(Basedirectory_, steps_)
+            : OptimizationSuiteBase(directory_, steps_)
         {}
 
         template <template <class> class... Ps>
         void Optimize()
         {
+            problems_count = sizeof...(Ps);
             ProblemPack<Pack, Ps...> opti(directory, step_count);
         }
+    protected:
+        virtual std::size_t ProblemsCount() const { return problems_count; };
+        virtual std::size_t ParamsCount() const { return sizeof...(Ts); };
     private:
         template <template <class> class TProblem>
         using Pack = Pack2P < TAlgorithm, TProblem, Ts...>;
+        std::size_t problems_count = {};
     };
 }
 
