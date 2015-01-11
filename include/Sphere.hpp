@@ -1,6 +1,10 @@
 /**
-* The following code declares class Variant,
-* which is base class for the concrete pso variant.
+* The following code declares class Sphere,
+* which is the optimization problem
+* N-dimensional Sphere function
+*
+*
+* \image html sphere.jpg
 *
 * See <WEBSITE> for documentation.
 *
@@ -17,31 +21,39 @@
 #define PSOPP_SPHERE_HPP
 
 #include "Problem.hpp"
+#include "TypeInfo.hpp"
 
 namespace psopp
 {
+   /**
+    * The following code declares class Sphere,
+    * which is the optimization problem
+    * N-dimensional Sphere function
+    *
+    * \image html sphere.jpg
+    */
     template<
         class TDomain
     >
-    class Sphere : public Problem<Domain>
+    class Sphere : public Problem<TDomain>
     {
     public:
-        void operator()(typename Domain::position_type& position_) const
+        void operator()(typename TDomain::position_type& position_) const
         {
             position_.fitness = {};
-            for (size_t i = 0; i < Domain::Size - 1; ++i)
+            for (size_t i = 0; i < TDomain::Size - 1; ++i)
             {
                 position_.fitness += position_.coordinates[i] * 
                                      position_.coordinates[i];
             }
         }
 
-        typename Domain::value_type Min(size_t dim_) const
+        typename TDomain::value_type Min(size_t dim_) const
         {
             return -5.12;
         }
 
-        typename Domain::value_type Max(size_t dim_) const
+        typename TDomain::value_type Max(size_t dim_) const
         {
             return 5.12;
         }
