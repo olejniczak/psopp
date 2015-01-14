@@ -95,7 +95,7 @@
     <ClInclude Include="..\..\..\include\Topology.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\Visualizer.hpp">
+    <ClInclude Include="..\..\..\include\PlotGen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

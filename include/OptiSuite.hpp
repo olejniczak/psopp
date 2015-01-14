@@ -23,6 +23,7 @@
 #include "DomainR.hpp"
 #include "DumpFile.hpp"
 #include "Init.hpp"
+#include "PlotGen.hpp"
 #include "ReportGen.hpp"
 #include "Rosenbrock.hpp"
 #include "Sphere.hpp"
@@ -88,14 +89,6 @@ namespace psopp
     template <template <class> class TVariant, template <class> class TProblem>
     using TAVariantFull20 = Algorithm<SwarmTopo20<Full>, TVariant, TProblem, StdInit, DumpFile>;
 
-
-
-    //std::string SubDirectory(size_t num_)
-    //{
-    //    std::stringstream ss;
-    //    ss << std::setfill('0') << std::setw(2) << num_;
-    //    return ss.str();
-    //}
 
     /**
      * Helper function - create directory
@@ -217,15 +210,29 @@ namespace psopp
         TA<T, P> instance;
     };
 
-
     /**
-     * @class OptimizationSuiteBase
-     */
+    * @class NoReport
+    * @brief Dummy report policy - doesn't create report
+    */
     struct NoReport
     {
         NoReport(std::size_t problems_count_, std::size_t params_count_, std::size_t step_count_) {}
         void Generate(const std::string& directory_, const std::string& report_dir_) {}
     };
+
+    /**
+    * @class NoPlot
+    * @brief Dummy plotter policy - doesn't create plot
+    */
+    struct NoPlot
+    {
+        NoPlot(std::size_t problems_count_, std::size_t params_count_, std::size_t step_count_) {}
+        void Generate(const std::string& directory_, std::initializer_list<std::string> problems_, std::initializer_list<std::string> params_) {}
+    };
+
+    /**
+     * @class OptimizationSuiteBase
+     */
     struct OptimizationSuiteBase
     {
         char* const REPORT_DIR = "\\report";
@@ -242,6 +249,13 @@ namespace psopp
             CreateDirectory(directory + REPORT_DIR);
             TGenerator report_gen(ProblemsCount(), ParamsCount(), step_count);
             report_gen.Generate(directory, REPORT_DIR);
+        }
+
+        template <class TPlotter = NoPlot>
+        void GeneratePlot(std::initializer_list<std::string> problems_, std::initializer_list<std::string> params_)
+        {
+            TPlotter plot_gen(ProblemsCount(), ParamsCount());
+            plot_gen.Generate(directory + "\\" + REPORT_DIR, problems_, params_);
         }
     protected:
         virtual std::size_t ProblemsCount() const = 0;

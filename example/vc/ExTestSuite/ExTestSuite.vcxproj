@@ -110,7 +110,7 @@
     <ClInclude Include="..\..\..\include\Swarm.hpp" />
     <ClInclude Include="..\..\..\include\SwarmStructure.hpp" />
     <ClInclude Include="..\..\..\include\Topology.hpp" />
-    <ClInclude Include="..\..\..\include\Visualizer.hpp" />
+    <ClInclude Include="..\..\..\include\PlotGen.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

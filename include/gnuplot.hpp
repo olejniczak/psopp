@@ -12,6 +12,9 @@
 #ifndef PSOPP_GNUPLOT_HPP
 #define PSOPP_GNUPLOT_HPP
 
+#include <stdio.h>
+#include <string>
+
 #if defined(_WIN32) || defined(_WIN64)
 #define popen _popen
 #define pclose _pclose
@@ -22,12 +25,9 @@ namespace psopp
     /**
     * The following code declares class gnuplot,
     */
-    template<
-        class TCommands
-    >
-    class gnuplot : public TCommands
+    class gnuplot
     {
-    protected:
+    public:
        /**
         * c'tor
         *
@@ -56,7 +56,7 @@ namespace psopp
        /**
         *
         */
-        gnuplot& operator << (const std::string&)
+        gnuplot& operator << (const std::string& cmd_)
         {
             command(cmd_);
             return *this;
@@ -65,20 +65,13 @@ namespace psopp
        /**
         *
         */
-        void command(const std::string&);
+        void command(const std::string& cmd_)
         {
-            fprintf(pipe, (cmd_ + "\n").c_str());
-            fflush(pipe);
+            std::fprintf(pipe, (cmd_ + "\n").c_str());
+            std::fflush(pipe);
         }
     private:
         std::FILE* pipe;
-    };
-
-    class Plot3D
-    {
-    public:
-    protected:
-        virtual void execute() = 0;
     };
 }
 

@@ -20,8 +20,8 @@
 namespace psopp
 {
     /**
-     * Helper function - number to string
-     */
+    * Helper function - number to string
+    */
     std::string SubDirectory(std::size_t num_, std::size_t width_ = 2)
     {
         std::stringstream ss;

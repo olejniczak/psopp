@@ -13,7 +13,9 @@ int main()
     opti_sizes("d:\\psopp\\sizes", 50);
     opti_sizes.Optimize<Rosenbrock, Sphere, StyblinskiTang, Ackley1>();
     opti_sizes.GenerateReport<ConvergencePlot>();
-#elif 0
+    opti_sizes.GeneratePlot<MultiPlot>({ "Rosenbrock", "Sphere", "StyblinskiTang", "Ackley" }, 
+                                       { "10 particles", "20 particles", "50 particles", "100 particles" });
+#elif 1
     OptimizationSuite1
     <
         TATopology50,
@@ -22,6 +24,8 @@ int main()
     opti_topos("d:\\psopp\\topos", 50);
     opti_topos.Optimize<Rosenbrock, Sphere, StyblinskiTang, Ackley1>();
     opti_topos.GenerateReport<ConvergencePlot>();
+    opti_topos.GeneratePlot<MultiPlot>({ "Rosenbrock", "Sphere", "StyblinskiTang", "Ackley" }, 
+                                       { "Full", "Ring", "Star" });
 #else
     OptimizationSuite2
     <
@@ -31,6 +35,8 @@ int main()
     opti_variants("d:\\psopp\\variants", 50);
     opti_variants.Optimize<Rosenbrock, Sphere, StyblinskiTang, Ackley1>();
     opti_variants.GenerateReport<ConvergencePlot>();
+    opti_variants.GeneratePlot<MultiPlot>({ "Rosenbrock", "Sphere", "StyblinskiTang", "Ackley" }, 
+                                          { "Canonical", "Constricted" });
 #endif
     return 0;
 }

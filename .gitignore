@@ -152,3 +152,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 html/
 *.7z
+/example/vc/ExTestSuite/NULL
