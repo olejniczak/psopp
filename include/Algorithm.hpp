@@ -17,8 +17,6 @@
 
 
 /**
-* The following code declares class Algorithm,
-* which is base class for the concrete pso variant.
 *
 * See http://przole.github.io/psopp for documentation.
 *
@@ -63,7 +61,8 @@ namespace psopp
     };
 
     /**
-     *
+     * The following code declares class Algorithm,
+     * which is base class for the concrete pso variant.
      */
     template <
         class TSwarm,
@@ -99,7 +98,7 @@ namespace psopp
             {
                 Next(step);
                 Step();
-                if (std::fabs(this->swarm.worst().position.fitness - this->swarm.best().position.fitness) < 0.001) return step;
+                // if (std::fabs(this->swarm.worst().position.fitness - this->swarm.best().position.fitness) < 0.001) return step;
             }
             return step;
         }

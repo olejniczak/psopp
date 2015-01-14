@@ -1,10 +1,4 @@
 /**
-* The following code declares class Sphere,
-* which is the optimization problem
-* N-dimensional Sphere function
-*
-*
-* \image html sphere.jpg
 *
 * See http://przole.github.io/psopp for documentation.
 *

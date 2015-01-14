@@ -1,16 +1,16 @@
 /**
-*
-* See http://przole.github.io/psopp for documentation.
-*
-* @author Copyright &copy 2011 Przemys³aw Olejniczak.
-* @version 0.2.0
-* @date 2015.01.11
-*
-* Distributed under the Boost Software License, Version 1.0.
-* (See accompanying file LICENSE_1_0.txt or copy at
-* http://www.boost.org/LICENSE_1_0.txt)
-*
-*/
+ *
+ * See http://przole.github.io/psopp for documentation.
+ *
+ * @author Copyright &copy 2011 Przemys³aw Olejniczak.
+ * @version 0.2.0
+ * @date 2015.01.11
+ *
+ * Distributed under the Boost Software License, Version 1.0.
+ * (See accompanying file LICENSE_1_0.txt or copy at
+ * http://www.boost.org/LICENSE_1_0.txt)
+ *
+ */
 #ifndef PSOPP_REPORT_GEN_HPP
 #define PSOPP_REPORT_GEN_HPP
 
@@ -72,6 +72,7 @@ namespace psopp
                 for (std::size_t s = 1; s <= step_count; ++s)
                 {
                     std::stringstream ss;
+                    ss << s << "\t";
                     for (std::size_t t = 0; t < params_count; ++t)
                     {
                         ss << data[p][t][s - 1] << "\t";

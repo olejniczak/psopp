@@ -1,6 +1,4 @@
 /**
-* The following code declares class Variant,
-* which is base class for the concrete pso variant.
 *
 * See http://przole.github.io/psopp for documentation.
 *
@@ -40,7 +38,13 @@ namespace psopp
             return 2 * 3.14159265358979323846;
         }
     };
-
+    /**
+     * The following code declares class Ackley,
+     * which is the optimization problem
+     * N-dimensional Ackley's function
+     *
+     * \image html ackley.jpg
+     */
     template<
         class TDomain,
         class TParams = AckleyParams
