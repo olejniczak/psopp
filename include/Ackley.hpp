@@ -56,23 +56,23 @@ namespace psopp
         {
             typename TDomain::value_type sum[2] = {};
 
-            for (size_t i = 0; i < TDomain::Size; ++i)
+            for (std::size_t i = 0; i < TDomain::Size; ++i)
             {
                 auto xi = position_.coordinates[i];
                 sum[0] += xi * xi;
-                sum[1] += std::cos(c() * xi);
+                sum[1] += std::cos(this->c() * xi);
             }
 
             double n = TDomain::Size;
-            position_.fitness = -a() * std::exp(-b() * sqrt(sum[0] / n)) - std::exp(sum[1] / n) + a() + std::exp(1);
+            position_.fitness = -this->a() * std::exp(-this->b() * sqrt(sum[0] / n)) - std::exp(sum[1] / n) + this->a() + std::exp(1);
         }
 
-        typename TDomain::value_type Min(size_t dim_) const
+        typename TDomain::value_type Min(std::size_t dim_) const
         {
             return -5;
         }
 
-        typename TDomain::value_type Max(size_t dim_) const
+        typename TDomain::value_type Max(std::size_t dim_) const
         {
             return 5;
         }
