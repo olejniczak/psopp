@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.1)
+PROJECT(psopp)
+INCLUDE_DIRECTORIES(include)
+INCLUDE_DIRECTORIES(libs)
+ADD_SUBDIRECTORY(test)
+ADD_SUBDIRECTORY(example)
