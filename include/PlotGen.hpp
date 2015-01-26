@@ -47,7 +47,9 @@ namespace psopp
             put("set output \"plot.jpg\"");
             put("set multiplot layout 4, 1");
             put("set lmargin at screen 0.1");
-            put("set yrange[] reverse");
+            //put("set yrange[] reverse");
+            put("set xlabel \"Step count\" offset 40,0,0");
+            put("set ylabel \"f(x)\"");
 
             size_t p = problems_count - 1;
             for (auto ip = problems_.begin(); ip != problems_.end(); ++ip)
