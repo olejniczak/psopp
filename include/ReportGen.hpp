@@ -29,6 +29,13 @@ namespace psopp
         return ss.str();
     }
 
+    static const std::string path_separator =
+#if defined(_WIN32) || defined(_WIN64)
+    "\\";
+#else
+    "/";
+#endif
+
     /**
     * @class ConvergencePlot
     */
@@ -48,9 +55,9 @@ namespace psopp
                 {
                     for (std::size_t s = 1; s <= step_count; ++s)
                     {
-                        std::string file_path = directory_ + "\\P" + SubDirectory(p) 
-                                                           + "\\T" + SubDirectory(t)
-                                                           + "\\" + SubDirectory(s, 8) + ".pso";
+                        std::string file_path = directory_ + path_separator + "P" + SubDirectory(p)
+                                                           + path_separator + "T" + SubDirectory(t)
+                                                           + path_separator + SubDirectory(s, 8) + ".pso";
                         std::ifstream swarm_file(file_path);
                         std::string line;
                         std::getline(swarm_file, line);
@@ -66,7 +73,7 @@ namespace psopp
 
             for (std::size_t p = 0; p < problems_count; ++p)
             {
-                std::string file_path = directory_ + "\\" + report_dir_ + "\\" + SubDirectory(p) + ".dat";
+                std::string file_path = directory_ + path_separator + report_dir_ + path_separator + SubDirectory(p) + ".dat";
                 std::ofstream output_file(file_path);
                 
                 for (std::size_t s = 1; s <= step_count; ++s)

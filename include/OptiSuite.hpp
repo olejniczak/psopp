@@ -14,7 +14,11 @@
 #ifndef PSOPP_OPTISUITE_HPP
 #define PSOPP_OPTISUITE_HPP
 
+#if defined(_WIN32) || defined(_WIN64)
 #include <direct.h>
+#else
+#include <sys/stat.h>
+#endif
 
 #include "Ackley.hpp"
 #include "Algorithm.hpp"
@@ -128,7 +132,7 @@ namespace psopp
     {
         ProblemPack(const std::string& name_, size_t steps_)
             : ProblemPack<G1, Ps...>(name_, steps_),
-              pack(name_ + "\\P" + SubDirectory(sizeof...(Ps)), steps_)
+              pack(name_ + path_separator + "P" + SubDirectory(sizeof...(Ps)), steps_)
         {
         }
     private:
@@ -163,7 +167,7 @@ namespace psopp
             : Pack1P<TA, P, Ts...>(name_, steps_)
         {
             CreateDirectory(name_);
-            std::string dir(name_ + "\\T" + SubDirectory(sizeof...(Ts)));
+            std::string dir(name_ + path_separator + "T" + SubDirectory(sizeof...(Ts)));
             CreateDirectory(dir);
             instance.DumpDirectory(dir);
             instance.Start(steps_);
@@ -202,7 +206,7 @@ namespace psopp
         : Pack2P<TA, P, Ts...>(name_, steps_)
         {
             CreateDirectory(name_);
-            std::string dir(name_ + "\\T" + SubDirectory(sizeof...(Ts)));
+            std::string dir(name_ + path_separator + "T" + SubDirectory(sizeof...(Ts)));
             CreateDirectory(dir);
             instance.DumpDirectory(dir);
             instance.Start(steps_);
@@ -235,10 +239,8 @@ namespace psopp
      */
     struct OptimizationSuiteBase
     {
-        char* const REPORT_DIR = "\\report";
-
         OptimizationSuiteBase(const std::string& directory_, std::size_t steps_)
-            : directory(directory_), step_count(steps_)
+            : directory(directory_), step_count(steps_), REPORT_DIR("report")
         {
             CreateDirectory(directory);
         }
@@ -246,7 +248,7 @@ namespace psopp
         template <class TGenerator = NoReport>
         void GenerateReport()
         {
-            CreateDirectory(directory + REPORT_DIR);
+            CreateDirectory(directory + path_separator + REPORT_DIR);
             TGenerator report_gen(ProblemsCount(), ParamsCount(), step_count);
             report_gen.Generate(directory, REPORT_DIR);
         }
@@ -255,7 +257,7 @@ namespace psopp
         void GeneratePlot(std::initializer_list<std::string> problems_, std::initializer_list<std::string> params_)
         {
             TPlotter plot_gen(ProblemsCount(), ParamsCount());
-            plot_gen.Generate(directory + "\\" + REPORT_DIR, problems_, params_);
+            plot_gen.Generate(directory + path_separator + REPORT_DIR + path_separator, problems_, params_);
         }
     protected:
         virtual std::size_t ProblemsCount() const = 0;
@@ -263,6 +265,7 @@ namespace psopp
     protected:
         std::string directory;
         std::size_t step_count;
+        const std::string REPORT_DIR;
     };
 
     /**

@@ -4,7 +4,7 @@
 #include "BaseParameters.hpp"
 #include "CanonicalPSO.hpp"
 #include "DomainR.hpp"
-#include "Himmelblau.hpp"
+//#include "Himmelblau.hpp"
 #include "Init.hpp"
 #include "MapReader.hpp"
 #include "Random.hpp"

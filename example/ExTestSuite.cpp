@@ -21,7 +21,7 @@ int main()
         TATopology50,
         Full, Ring, Star
     >
-    opti_topos("d:\\psopp\\topos", 50);
+    opti_topos("d:\\psopp\\topoz", 50);
     opti_topos.Optimize<Rosenbrock, Sphere, StyblinskiTang, Ackley1>();
     opti_topos.GenerateReport<ConvergencePlot>();
     opti_topos.GeneratePlot<MultiPlot>({ "Rosenbrock", "Sphere", "StyblinskiTang", "Ackley" }, 

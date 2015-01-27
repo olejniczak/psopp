@@ -36,7 +36,7 @@ namespace psopp
 
         void Generate(const std::string& directory_, std::initializer_list<std::string> problems_, std::initializer_list<std::string> params_)
         {
-            of.open(directory_ + "\\plot.plt");
+            of.open(directory_ + "plot.plt");
             if (problems_.size() != problems_count || params_.size() != params_count) return;
             if (!gplot.valid()) return;
             

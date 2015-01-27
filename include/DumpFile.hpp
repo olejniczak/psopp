@@ -28,6 +28,15 @@ namespace psopp
     >
     struct DumpFile
     {
+        const std::string path_separator;
+        DumpFile() : path_separator(
+#if defined(_WIN32) || defined(_WIN64)
+        "\\")
+#else
+        "/")
+#endif
+        {}
+
         void DumpDirectory(const std::string& directory_)
         {
             directory = directory_;
@@ -38,7 +47,7 @@ namespace psopp
         {
             of.close();
             std::stringstream ss;
-            ss << directory << "\\" << std::setfill('0') << std::setw(8) << step_ << ".pso";
+            ss << directory << path_separator << std::setfill('0') << std::setw(8) << step_ << ".pso";
             of.open(ss.str());
         }
 
